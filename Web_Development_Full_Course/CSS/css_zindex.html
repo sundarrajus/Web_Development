@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09 - CSS Z-Index</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 30px; }
+        .wrapper { max-width: 900px; margin: 0 auto; }
+        h1 { color: #8e44ad; margin-bottom: 20px; }
+        h2 { color: #333; border-left: 4px solid #8e44ad; padding-left: 10px; margin: 30px 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        p { color: #555; margin-bottom: 10px; line-height: 1.6; }
+        code { background: #f5eef8; padding: 2px 6px; border-radius: 3px; font-family: monospace; color: #8e44ad; }
+
+        /* ===== 1. Without z-index — stacking order ===== */
+        .stack-demo {
+            position: relative;
+            height: 150px;
+        }
+        .stack-demo div {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+        .s1 { background: red;    top: 0;  left: 0;  }
+        .s2 { background: blue;   top: 20px; left: 40px; }
+        .s3 { background: green;  top: 40px; left: 80px; }
+        /* Last element in HTML is on top — default stacking */
+
+        /* ===== 2. z-index demo — from your zindex.html ===== */
+        .zindex-container {
+            height: 200px;
+            width: 250px;
+            border: 2px solid black;
+            margin: 0 auto;
+            position: relative;
+        }
+        .zi-item {
+            height: 180px;
+            width: 180px;
+            position: absolute;
+            border: 2px solid black;
+            top: 10px;
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 10px;
+            font-weight: bold;
+        }
+        .zi-1 { background-color: red;         z-index: 100; left: 5px; }
+        .zi-2 { background-color: cyan;         z-index: 101; left: 20px; }
+        .zi-3 { background-color: brown;        z-index: 10;  left: 35px; }  /* lowest z-index — goes behind */
+        .zi-4 { background-color: yellowgreen;  z-index: 102; left: 50px; }  /* highest — on top */
+
+        /* ===== 3. Practical: Tooltip with z-index ===== */
+        .tooltip-wrap {
+            position: relative;
+            display: inline-block;
+            margin: 40px 20px;
+        }
+        .tooltip-btn {
+            background: #8e44ad;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .tooltip-text {
+            display: none;
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            white-space: nowrap;
+            font-size: 13px;
+            z-index: 999; /* Make sure tooltip appears above other elements */
+        }
+        .tooltip-wrap:hover .tooltip-text { display: block; }
+
+        /* ===== 4. Modal overlay (z-index in real life) ===== */
+        .modal-demo-area {
+            position: relative;
+            height: 200px;
+            background: #fafafa;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .page-content {
+            padding: 15px;
+        }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-box {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            z-index: 20;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ==========================================
+         09 - CSS Z-INDEX
+         What you will learn:
+         - Default stacking order (no z-index)
+         - z-index property — higher number = on top
+         - position must be set for z-index to work
+         - Real uses: tooltips, modals, dropdowns
+    ========================================== -->
+
+    <h1>CSS Z-Index</h1>
+
+    <!-- 1. DEFAULT STACKING -->
+    <h2>1. Default Stacking — No z-index</h2>
+    <div class="card">
+        <p>Without z-index, elements stack in HTML order — the <strong>last element in the HTML</strong> appears on top.</p>
+        <div class="stack-demo">
+            <div class="s1">1st in HTML</div>
+            <div class="s2">2nd in HTML</div>
+            <div class="s3">3rd (on top)</div>
+        </div>
+    </div>
+
+    <!-- 2. z-index -->
+    <h2>2. z-index — Control the Stack Order</h2>
+    <div class="card">
+        <p><code>z-index</code> controls which element appears on top. <strong>Higher number = on top.</strong></p>
+        <p><strong>Important:</strong> z-index only works on elements that have a <code>position</code> value set (relative, absolute, fixed, or sticky).</p>
+        <p>In the example below: z-index order is 10 → 100 → 101 → 102</p>
+        <div class="zindex-container">
+            <div class="zi-item zi-1">z:100</div>
+            <div class="zi-item zi-2">z:101</div>
+            <div class="zi-item zi-3">z:10 (behind!)</div>
+            <div class="zi-item zi-4">z:102 (top!)</div>
+        </div>
+    </div>
+
+    <!-- 3. TOOLTIP -->
+    <h2>3. Real Use — Tooltip with z-index</h2>
+    <div class="card">
+        <p>Tooltips appear above other content. We use <code>z-index: 999</code> to ensure they're always on top.</p>
+        <div>
+            <div class="tooltip-wrap">
+                <button class="tooltip-btn">Hover me!</button>
+                <div class="tooltip-text">I appear above everything! (z-index: 999)</div>
+            </div>
+            <div class="tooltip-wrap">
+                <button class="tooltip-btn" style="background:#e44d26;">Another button</button>
+                <div class="tooltip-text">Tooltip for button 2</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MODAL OVERLAY -->
+    <h2>4. Real Use — Modal/Popup Overlay</h2>
+    <div class="card">
+        <p>Modals need a dark overlay on top of the page (high z-index), and the modal box even higher.</p>
+        <p><code>overlay: z-index: 10</code> → <code>modal box: z-index: 20</code></p>
+        <div class="modal-demo-area">
+            <div class="page-content">
+                <h4>Page Content (behind overlay)</h4>
+                <p>This text is covered by the overlay.</p>
+            </div>
+            <div class="overlay">
+                <div class="modal-box">
+                    <h3>🔔 Modal Box</h3>
+                    <p style="margin:0;">I appear on top of the overlay!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. KEY RULES -->
+    <h2>5. Key Rules to Remember</h2>
+    <div class="card">
+        <ul style="padding-left: 20px; color: #555; line-height: 2;">
+            <li><code>z-index</code> only works when <code>position</code> is set (not static)</li>
+            <li>Higher z-index = appears in front</li>
+            <li>Negative z-index = goes behind other elements</li>
+            <li>Common values: tooltips <code>999</code>, modals <code>1000</code>, fixed headers <code>100</code></li>
+            <li>Without setting position, z-index has no effect!</li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

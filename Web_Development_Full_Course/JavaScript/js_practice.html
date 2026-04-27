@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 - Practice Programs</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        /* Demo UI */
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 5px; width: 120px; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        #result { margin-top: 10px; font-weight: bold; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         06 - PRACTICE PROGRAMS
+         What you will learn:
+         - Prime number check using a loop
+         - Factor-counting logic
+         - Using for loops for problem solving
+    ========================================== -->
+
+    <h1>Practice Programs</h1>
+
+    <!-- LIVE DEMO: Prime Checker -->
+    <div id="demo-area">
+        <h3>Prime Number Checker</h3>
+        <input type="number" id="numInput" placeholder="Enter a number" min="1">
+        <button onclick="checkPrime()">Check</button>
+        <p id="result"></p>
+    </div>
+
+    <!-- 1. PRIME NUMBER CHECK -->
+    <h2>Prime Number Check</h2>
+    <div class="note">
+        <strong>Logic:</strong> A prime number has exactly 2 factors — 1 and itself.
+        Count all divisors; if the count is 2, the number is prime.
+    </div>
+    <pre>
+let a = 17;   // number to check
+let c = 0;    // factor counter
+
+for (let i = 1; i <= a; i++) {
+    if (a % i == 0) {
+        c += 1;   // i is a factor
+    }
+}
+
+if (c == 2) {
+    console.log(`${a} is a prime number`);
+} else {
+    console.log(`${a} is NOT a prime number`);
+}
+    </pre>
+
+    <!-- 2. FACTORS OF A NUMBER -->
+    <h2>Find All Factors</h2>
+    <pre>
+let a = 12;
+for (let i = 1; i <= a; i++) {
+    if (a % i == 0) {
+        console.log(i);   // 1, 2, 3, 4, 6, 12
+    }
+}
+    </pre>
+
+    <script>
+        // Interactive prime checker
+        function checkPrime() {
+            let a = parseInt(document.getElementById("numInput").value);
+            let result = document.getElementById("result");
+
+            if (isNaN(a) || a < 1) {
+                result.innerText = "Please enter a valid positive number.";
+                result.style.color = "gray";
+                return;
+            }
+
+            let c = 0;
+            for (let i = 1; i <= a; i++) {
+                if (a % i == 0) {
+                    c += 1;
+                }
+            }
+
+            if (c == 2) {
+                result.innerText = `✅ ${a} is a prime number`;
+                result.style.color = "green";
+            } else {
+                result.innerText = `❌ ${a} is NOT a prime number`;
+                result.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>

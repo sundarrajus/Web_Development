@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 - Error Handling</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 5px; width: 100px; }
+        #log { font-family: monospace; font-size: 13px; background: #f4f4f4; padding: 10px; border-radius: 4px; margin-top: 10px; min-height: 40px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         12 - ERROR HANDLING
+         What you will learn:
+         - Types of JS errors (SyntaxError, TypeError, ReferenceError...)
+         - try / catch / finally
+         - The Error object (message, name, stack)
+         - throw — custom errors
+         - Custom Error classes
+         - Error handling in async/await
+         - Best practices
+    ========================================== -->
+
+    <h1>Error Handling</h1>
+
+    <!-- LIVE DEMO -->
+    <div id="demo-area">
+        <h3>Division Calculator (with error handling)</h3>
+        <input type="number" id="num1" placeholder="Dividend" value="10">
+        <input type="number" id="num2" placeholder="Divisor" value="0">
+        <button onclick="safeDivide()">Divide</button>
+        <div id="log">Result will appear here...</div>
+    </div>
+
+    <!-- 1. TYPES OF ERRORS -->
+    <h2>Common Error Types</h2>
+    <pre>
+// SyntaxError — invalid code (caught before runtime)
+// let x = ;   ← SyntaxError: Unexpected token
+
+// ReferenceError — using an undeclared variable
+console.log(y);   // ReferenceError: y is not defined
+
+// TypeError — wrong type for an operation
+null.toString();  // TypeError: Cannot read properties of null
+
+// RangeError — value out of allowed range
+new Array(-1);    // RangeError: Invalid array length
+    </pre>
+
+    <!-- 2. try/catch/finally -->
+    <h2>try / catch / finally</h2>
+    <pre>
+function divide(a, b) {
+    if (b === 0) throw new Error("Cannot divide by zero!");
+    return a / b;
+}
+
+try {
+    let result = divide(10, 0);    // throws an error
+    console.log(result);           // this line is skipped
+} catch (err) {
+    // err is the Error object — has .name, .message, .stack
+    console.log(err.name);         // "Error"
+    console.log(err.message);      // "Cannot divide by zero!"
+} finally {
+    // always runs — use for cleanup (close DB, hide spinner, etc.)
+    console.log("Calculation attempted.");
+}
+    </pre>
+
+    <!-- 3. THE ERROR OBJECT -->
+    <h2>The Error Object</h2>
+    <pre>
+try {
+    undefined.toString();
+} catch (err) {
+    console.log(err.name);     // "TypeError"
+    console.log(err.message);  // "Cannot read properties of undefined"
+    console.log(err.stack);    // Full stack trace (useful for debugging)
+}
+    </pre>
+
+    <!-- 4. THROWING CUSTOM ERRORS -->
+    <h2>throw — custom errors</h2>
+    <pre>
+function validateAge(age) {
+    if (typeof age !== "number") throw new TypeError("Age must be a number");
+    if (age < 0)   throw new RangeError("Age cannot be negative");
+    if (age > 150) throw new RangeError("Age seems unrealistic");
+    return true;
+}
+
+try {
+    validateAge("twenty");
+} catch (err) {
+    console.log(err.name + ": " + err.message);   // TypeError: Age must be a number
+}
+
+try {
+    validateAge(-5);
+} catch (err) {
+    console.log(err.name + ": " + err.message);   // RangeError: Age cannot be negative
+}
+    </pre>
+
+    <!-- 5. CUSTOM ERROR CLASSES -->
+    <h2>Custom Error Classes</h2>
+    <pre>
+class ValidationError extends Error {
+    constructor(message, field) {
+        super(message);
+        this.name = "ValidationError";
+        this.field = field;
+    }
+}
+
+class NetworkError extends Error {
+    constructor(message, statusCode) {
+        super(message);
+        this.name = "NetworkError";
+        this.statusCode = statusCode;
+    }
+}
+
+try {
+    throw new ValidationError("Email is required", "email");
+} catch (err) {
+    if (err instanceof ValidationError) {
+        console.log(`Field "${err.field}": ${err.message}`);
+    } else {
+        console.error("Unexpected error:", err);
+    }
+}
+    </pre>
+
+    <!-- 6. ASYNC ERROR HANDLING -->
+    <h2>Error Handling in async/await</h2>
+    <pre>
+async function fetchData(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new NetworkError("Request failed", res.status);
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        if (err instanceof NetworkError) {
+            console.error(`Network issue (${err.statusCode}): ${err.message}`);
+        } else {
+            console.error("Unexpected:", err.message);
+        }
+        return null;
+    }
+}
+    </pre>
+
+    <!-- 7. BEST PRACTICES -->
+    <h2>Best Practices</h2>
+    <div class="note">
+        <strong>Do:</strong>
+        Always use <code>try/catch</code> around code that can fail (user input, network, JSON parsing).
+        Throw meaningful error messages. Use <code>finally</code> for cleanup. Distinguish error types with <code>instanceof</code>.<br><br>
+        <strong>Don't:</strong>
+        Use empty catch blocks (<code>catch (e) {}</code>) — they silently swallow errors and make debugging very hard.
+    </div>
+    <pre>
+// BAD — silently swallows error
+try {
+    riskyOperation();
+} catch (e) {}   // never do this
+
+// GOOD — at minimum, log it
+try {
+    riskyOperation();
+} catch (e) {
+    console.error("riskyOperation failed:", e.message);
+}
+    </pre>
+
+    <script>
+        function safeDivide() {
+            const a = parseFloat(document.getElementById("num1").value);
+            const b = parseFloat(document.getElementById("num2").value);
+            const log = document.getElementById("log");
+            try {
+                if (isNaN(a) || isNaN(b)) throw new TypeError("Both inputs must be numbers.");
+                if (b === 0) throw new RangeError("Cannot divide by zero!");
+                const result = a / b;
+                log.style.color = "green";
+                log.textContent = `Result: ${a} ÷ ${b} = ${result}`;
+            } catch (err) {
+                log.style.color = "red";
+                log.textContent = `${err.name}: ${err.message}`;
+            } finally {
+                console.log("Divide attempted with:", a, b);
+            }
+        }
+    </script>
+
+</body>
+</html>

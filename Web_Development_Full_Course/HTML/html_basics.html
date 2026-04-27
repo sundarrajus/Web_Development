@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 - HTML Basics</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #e44d26; }
+        h2 { color: #333; border-bottom: 2px solid #e44d26; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         01 - HTML BASICS
+         What you will learn:
+         - What is HTML?
+         - HTML document structure
+         - Headings (h1 to h6)
+         - Paragraph tag
+         - Line break and horizontal rule
+         - Bold, italic, underline
+         - Links (anchor tag)
+         - Lists (ordered & unordered)
+         - Div and Span
+         - HTML Comments
+    ========================================== -->
+
+    <!-- 1. HEADINGS -->
+    <h1>Heading 1 - Largest</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <h5>Heading 5</h5>
+    <h6>Heading 6 - Smallest</h6>
+
+    <!-- 2. PARAGRAPH -->
+    <p>This is a paragraph. HTML paragraphs are created using the &lt;p&gt; tag.
+    Each paragraph starts on a new line and browsers automatically add some space before and after.</p>
+
+    <!-- 3. LINE BREAK & HORIZONTAL RULE -->
+    <p>This is line one.<br>This is line two after a break.</p>
+    <hr>
+
+    <!-- 4. TEXT FORMATTING -->
+    <p><b>Bold text using &lt;b&gt;</b></p>
+    <p><strong>Strong (important bold) using &lt;strong&gt;</strong></p>
+    <p><i>Italic text using &lt;i&gt;</i></p>
+    <p><em>Emphasised italic using &lt;em&gt;</em></p>
+    <p><u>Underlined text using &lt;u&gt;</u></p>
+    <p><mark>Highlighted text using &lt;mark&gt;</mark></p>
+    <p>H<sub>2</sub>O — subscript using &lt;sub&gt;</p>
+    <p>E=MC<sup>2</sup> — superscript using &lt;sup&gt;</p>
+
+    <!-- 5. LINKS -->
+    <h2>Links (Anchor Tag)</h2>
+    <a href="https://www.google.com" target="_blank">Open Google in a new tab</a><br>
+    <a href="#">This link goes nowhere (#)</a><br>
+    <a href="mailto:student@example.com">Send an email</a>
+
+    <!-- 6. LISTS -->
+    <h2>Lists</h2>
+
+    <!-- Unordered List -->
+    <h3>Unordered List (bullet points)</h3>
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ul>
+
+    <!-- Ordered List -->
+    <h3>Ordered List (numbers)</h3>
+    <ol>
+        <li>Learn HTML</li>
+        <li>Learn CSS</li>
+        <li>Learn JavaScript</li>
+    </ol>
+
+    <!-- Nested List -->
+    <h3>Nested List</h3>
+    <ul>
+        <li>Frontend
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </li>
+        <li>Backend
+            <ul>
+                <li>Node.js</li>
+                <li>Python</li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- 7. DIV AND SPAN -->
+    <h2>Div and Span</h2>
+    <div style="background: lightblue; padding: 10px; margin-bottom: 10px;">
+        This is a <code>&lt;div&gt;</code> — a block-level container. It takes full width.
+    </div>
+    <p>This sentence has a <span style="color: red; font-weight: bold;">span inside it</span> — span is inline.</p>
+
+    <!-- 8. COMMENTS NOTE -->
+    <div class="note">
+        <strong>Note:</strong> HTML comments look like this: <code>&lt;!-- your comment --&gt;</code>. 
+        They are not shown on the page but help other developers understand the code.
+    </div>
+
+</body>
+</html>

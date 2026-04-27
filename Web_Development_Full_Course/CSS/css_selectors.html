@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 - CSS Selectors & Pseudo-classes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px; }
+        .wrapper { max-width: 900px; margin: 0 auto; }
+        h1 { color: #6c3483; margin-bottom: 20px; }
+        h2 { color: #333; border-left: 4px solid #6c3483; padding-left: 10px; margin: 30px 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        p { color: #555; margin-bottom: 10px; line-height: 1.6; }
+        code { background: #f3e5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace; color: #6c3483; }
+        .demo-area { background: #fafafa; border: 1px dashed #ccc; padding: 20px; border-radius: 6px; margin-top: 10px; }
+
+        /* ===================================
+           SELECTOR EXAMPLES
+        =================================== */
+
+        /* --- Element selector --- */
+        .demo1 p { color: darkblue; font-size: 16px; }
+
+        /* --- Class selector --- */
+        .highlight { background-color: yellow; padding: 5px; }
+
+        /* --- ID selector --- */
+        #special { color: red; font-weight: bold; font-size: 18px; }
+
+        /* --- Multiple selectors --- */
+        .demo3 h3, .demo3 p { color: darkorange; }
+
+        /* --- Descendant selector --- */
+        .parent .child { color: green; font-weight: bold; }
+
+        /* --- :hover --- */
+        .demo-hover { 
+            background-color: #6c3483; 
+            color: white; 
+            padding: 10px 20px; 
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+        .demo-hover:hover { 
+            background-color: white; 
+            color: #6c3483; 
+            border: 2px solid #6c3483; 
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- Button hover (from your 25.html) --- */
+        .styled-btn {
+            border: none;
+            background-color: rgb(7, 7, 7);
+            color: white;
+            font-size: large;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .styled-btn:hover {
+            box-shadow: 2px 2px 8px blue;
+            background-color: cyan;
+            color: red;
+        }
+
+        /* --- :first-child, :last-child, :nth-child --- */
+        .demo-list li:first-child { color: green; font-weight: bold; }
+        .demo-list li:last-child { color: red; }
+        .demo-list li:nth-child(2) { color: blue; }
+
+        /* --- :focus --- */
+        .focus-input {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+            font-size: 15px;
+        }
+        .focus-input:focus { border-color: #6c3483; box-shadow: 0 0 5px rgba(108,52,131,0.4); }
+
+        /* --- ::before and ::after --- */
+        .before-after {
+            font-size: 20px;
+            color: #333;
+        }
+        .before-after::before { content: "🔥 "; }
+        .before-after::after { content: " 🎯"; }
+
+        /* --- ::first-letter --- */
+        .first-letter-demo { font-size: 50px; font-family: cursive; }
+        .first-letter-demo::first-letter { color: red; font-size: 80px; }
+
+        /* --- Span inside heading (from your text3.html) --- */
+        .jspider-heading { font-size: 60px; font-family: cursive; }
+        .jspider-heading span { color: red; }
+
+        /* --- Navigation with hover (from your text4.html, simplified) --- */
+        .demo-nav {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+        .demo-nav a {
+            text-decoration: none;
+            margin-right: 20px;
+            font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            padding: 8px 12px;
+            color: #333;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        .demo-nav a:hover {
+            background-color: red;
+            color: bisque;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ==========================================
+         06 - CSS SELECTORS & PSEUDO-CLASSES
+         What you will learn:
+         - Element, Class, ID selectors
+         - Grouping & descendant selectors
+         - :hover, :focus, :nth-child, :first-child, :last-child
+         - ::before, ::after, ::first-letter pseudo-elements
+    ========================================== -->
+
+    <h1>CSS Selectors & Pseudo-classes</h1>
+
+    <!-- 1. ELEMENT SELECTOR -->
+    <h2>1. Element Selector — <code>p { }</code></h2>
+    <div class="card">
+        <p>Targets all elements of that type. <code>p { color: darkblue; }</code></p>
+        <div class="demo-area demo1">
+            <p>This paragraph is styled by the element selector.</p>
+            <p>This one too — every &lt;p&gt; inside .demo1 is affected.</p>
+        </div>
+    </div>
+
+    <!-- 2. CLASS SELECTOR -->
+    <h2>2. Class Selector — <code>.classname { }</code></h2>
+    <div class="card">
+        <p>Targets elements with that class. Multiple elements can share a class.</p>
+        <div class="demo-area">
+            <p>Normal paragraph — no class</p>
+            <p class="highlight">This has class="highlight" → yellow background</p>
+            <p class="highlight">This also has it!</p>
+        </div>
+    </div>
+
+    <!-- 3. ID SELECTOR -->
+    <h2>3. ID Selector — <code>#id { }</code></h2>
+    <div class="card">
+        <p>Targets ONE unique element. IDs must be unique on the page.</p>
+        <div class="demo-area">
+            <p id="special">This has id="special" → red, bold, large</p>
+            <p>Normal paragraph</p>
+        </div>
+    </div>
+
+    <!-- 4. GROUP & DESCENDANT -->
+    <h2>4. Grouping & Descendant Selectors</h2>
+    <div class="card">
+        <p><code>h3, p { }</code> targets both. <code>.parent .child { }</code> targets child inside parent.</p>
+        <div class="demo-area demo3">
+            <h3>This h3 is orange (grouped)</h3>
+            <p>This p is also orange (grouped)</p>
+        </div>
+        <div class="demo-area" style="margin-top:10px;">
+            <div class="parent">
+                Parent div
+                <div class="child">I am .child inside .parent — green!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. :hover -->
+    <h2>5. :hover Pseudo-class</h2>
+    <div class="card">
+        <p>Applies styles when the mouse hovers over an element.</p>
+        <div class="demo-area">
+            <div class="demo-hover">Hover over me!</div>
+            &nbsp;&nbsp;
+            <button class="styled-btn">Button with Hover Effect</button>
+        </div>
+    </div>
+
+    <!-- 6. :focus -->
+    <h2>6. :focus Pseudo-class</h2>
+    <div class="card">
+        <p>Applies styles when the element is focused (clicked into). Very useful for form inputs.</p>
+        <div class="demo-area">
+            <input class="focus-input" type="text" placeholder="Click here to focus...">
+        </div>
+    </div>
+
+    <!-- 7. :nth-child, :first-child, :last-child -->
+    <h2>7. :first-child, :last-child, :nth-child()</h2>
+    <div class="card">
+        <p>Target list items by their position.</p>
+        <div class="demo-area">
+            <ul class="demo-list" style="padding-left: 20px;">
+                <li>First item — green (first-child)</li>
+                <li>Second item — blue (nth-child(2))</li>
+                <li>Third item — normal</li>
+                <li>Fourth item — normal</li>
+                <li>Fifth item — red (last-child)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 8. ::before and ::after -->
+    <h2>8. ::before & ::after Pseudo-elements</h2>
+    <div class="card">
+        <p>Add content before or after an element without touching the HTML.</p>
+        <div class="demo-area">
+            <p class="before-after">This text has icons added by CSS!</p>
+        </div>
+    </div>
+
+    <!-- 9. ::first-letter -->
+    <h2>9. ::first-letter Pseudo-element</h2>
+    <div class="card">
+        <p>Style just the first letter — great for magazine/blog dropcaps!</p>
+        <div class="demo-area">
+            <p class="first-letter-demo">JSpider</p>
+        </div>
+    </div>
+
+    <!-- 10. REAL EXAMPLE: Navigation Bar with Hover -->
+    <h2>10. Real Example — Navigation Bar with :hover</h2>
+    <div class="card">
+        <p>A full navigation bar where links change style on hover (from your text4.html practice).</p>
+        <nav class="demo-nav">
+            <a href="#">🏠 Home</a>
+            <a href="#">📚 Courses</a>
+            <a href="#">📞 Contacts</a>
+            <a href="#">🎓 Placements</a>
+        </nav>
+    </div>
+
+    <!-- 11. span inside heading -->
+    <h2>11. Styling Part of a Heading with span</h2>
+    <div class="card">
+        <p>Wrap part of text in <code>&lt;span&gt;</code> and target it with CSS.</p>
+        <div class="demo-area">
+            <h2 class="jspider-heading">J<span>S</span>pider</h2>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

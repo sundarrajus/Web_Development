@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 - Modules (import / export)</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        .tip  { background: #d4edda; border-left: 4px solid #28a745; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        .file-label { display: inline-block; background: #444; color: #f7df1e; font-size: 12px; font-family: monospace; padding: 3px 10px; border-radius: 4px 4px 0 0; margin-bottom: 0; }
+        pre.file { margin-top: 0; border-radius: 0 6px 6px 6px; }
+        .folder { background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; padding: 14px 18px; font-family: monospace; font-size: 14px; line-height: 1.9; margin: 10px 0; }
+        .folder span { color: #888; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         14 - MODULES (import / export)
+         What you will learn:
+         - Why modules exist
+         - Named exports
+         - Default export
+         - Named imports
+         - Import all as namespace
+         - Re-exporting
+         - Dynamic import()
+         - Module folder structure best practices
+         - Browser modules vs Node.js modules
+    ========================================== -->
+
+    <h1>Modules (import / export)</h1>
+
+    <!-- WHY MODULES? -->
+    <h2>Why Modules?</h2>
+    <div class="note">
+        Before modules, all JS files shared one global scope — variables in one file could
+        accidentally overwrite variables in another. Modules solve this by giving each file
+        its own private scope. You <strong>explicitly export</strong> what others can use,
+        and <strong>explicitly import</strong> what you need.
+    </div>
+
+    <!-- FOLDER STRUCTURE -->
+    <h2>Typical Folder Structure</h2>
+    <div class="folder">
+        project/<br>
+        &nbsp;&nbsp;index.html<br>
+        &nbsp;&nbsp;main.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>← entry point</span><br>
+        &nbsp;&nbsp;utils/<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;math.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>← utility module</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;strings.js<br>
+        &nbsp;&nbsp;models/<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;User.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>← class module</span><br>
+    </div>
+
+    <!-- 1. NAMED EXPORTS -->
+    <h2>Named Exports</h2>
+    <div class="file-label">utils/math.js</div>
+    <pre class="file">
+// Named export — export multiple things from one file
+export const PI = 3.14159;
+
+export function add(a, b)      { return a + b; }
+export function subtract(a, b) { return a - b; }
+export function multiply(a, b) { return a * b; }
+
+// Can also export at the bottom in a list
+// export { PI, add, subtract, multiply };
+    </pre>
+
+    <div class="file-label">main.js</div>
+    <pre class="file">
+// Named import — must use the exact exported names
+import { PI, add, multiply } from './utils/math.js';
+
+console.log(PI);           // 3.14159
+console.log(add(3, 4));    // 7
+console.log(multiply(3, 4)); // 12
+
+// Rename on import with 'as'
+import { add as sum } from './utils/math.js';
+console.log(sum(10, 20));  // 30
+    </pre>
+
+    <!-- 2. DEFAULT EXPORT -->
+    <h2>Default Export</h2>
+    <div class="note">
+        Each file can have <strong>only one</strong> default export. It is usually the
+        main thing the file is about — a class, a function, or a component.
+    </div>
+    <div class="file-label">models/User.js</div>
+    <pre class="file">
+// Default export — one per file
+export default class User {
+    constructor(name, email) {
+        this.name  = name;
+        this.email = email;
+    }
+    greet() { return `Hello, ${this.name}`; }
+}
+    </pre>
+
+    <div class="file-label">main.js</div>
+    <pre class="file">
+// Default import — you choose ANY name (no curly braces)
+import User from './models/User.js';
+
+const u = new User("Sundar", "sundar@example.com");
+console.log(u.greet());   // Hello, Sundar
+    </pre>
+
+    <!-- 3. IMPORT ALL AS NAMESPACE -->
+    <h2>Import all as namespace (*)</h2>
+    <pre>
+// Import everything from a module under one namespace object
+import * as MathUtils from './utils/math.js';
+
+console.log(MathUtils.PI);           // 3.14159
+console.log(MathUtils.add(5, 3));    // 8
+    </pre>
+
+    <!-- 4. RE-EXPORTING -->
+    <h2>Re-exporting (barrel files)</h2>
+    <div class="tip">
+        <strong>Pattern:</strong> Create an <code>index.js</code> inside a folder that
+        re-exports everything. Consumers then import from the folder, not individual files.
+    </div>
+    <div class="file-label">utils/index.js</div>
+    <pre class="file">
+export { add, subtract, multiply, PI } from './math.js';
+export { capitalize, trim }           from './strings.js';
+    </pre>
+
+    <div class="file-label">main.js</div>
+    <pre class="file">
+// Clean single import from the folder
+import { add, capitalize } from './utils';
+    </pre>
+
+    <!-- 5. DYNAMIC IMPORT -->
+    <h2>Dynamic import() — lazy loading</h2>
+    <pre>
+// Loads the module only when needed (returns a Promise)
+async function loadHeavyFeature() {
+    const { heavyFunction } = await import('./heavy-module.js');
+    heavyFunction();
+}
+
+// Useful for code-splitting — don't load code the user may never need
+document.getElementById("btn").addEventListener("click", async () => {
+    const module = await import('./chart.js');
+    module.renderChart(data);
+});
+    </pre>
+
+    <!-- 6. BROWSER vs NODE -->
+    <h2>Browser Modules vs Node.js</h2>
+    <pre>
+// BROWSER — use type="module" in HTML; file paths need extensions
+// &lt;script type="module" src="main.js"&gt;&lt;/script&gt;
+
+// NODE.js (CommonJS — older style)
+const math = require('./math');         // import
+module.exports = { add, subtract };     // export
+
+// NODE.js (ES Modules — modern, add "type": "module" in package.json)
+import { add } from './math.js';
+export { add };
+    </pre>
+
+    <div class="note">
+        <strong>Note:</strong> This file demonstrates module concepts with code examples.
+        Since modules require a server or bundler (like Vite or Webpack) to work in the browser,
+        the interactive demo is not runnable as a plain HTML file.
+        When you build a real project, use <code>&lt;script type="module"&gt;</code> and a dev server.
+    </div>
+
+</body>
+</html>

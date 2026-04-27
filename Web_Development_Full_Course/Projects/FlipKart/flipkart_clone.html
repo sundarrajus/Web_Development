@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 - Project: Flipkart Clone</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="flipkart_style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         PROJECT 14 — FLIPKART NAVBAR CLONE
+         Skills used:
+         - CSS Flexbox (display: flex, justify-content: space-evenly)
+         - Positioning
+         - CSS hover effects
+         - Font styling
+         - Responsive navbar
+    ========================================== -->
+
+    <!-- NAVBAR -->
+    <nav class="fk-nav">
+        <!-- Logo -->
+        <div class="fk-logo">
+            <h1>FlipKart</h1>
+            <span>Explore <em>plus</em></span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="fk-search">
+            <i class="bi bi-search search-icon"></i>
+            <input type="search" placeholder="Search for products, brands & more">
+            <button class="search-btn">Search</button>
+        </div>
+
+        <!-- Login Button -->
+        <div class="fk-login">
+            <button><i class="bi bi-person-circle"></i> Login <i class="bi bi-chevron-down"></i></button>
+        </div>
+
+        <!-- Cart -->
+        <div class="fk-cart">
+            <a href="#"><i class="bi bi-cart3"></i> Cart</a>
+        </div>
+
+        <!-- Seller link -->
+        <div class="fk-seller">
+            <a href="#">Become a Seller</a>
+        </div>
+    </nav>
+
+    <!-- CATEGORY BAR -->
+    <div class="cat-bar">
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home</a>
+        <a href="#">Appliances</a>
+        <a href="#">Books</a>
+        <a href="#">Toys</a>
+        <a href="#">Sports</a>
+        <a href="#">Grocery</a>
+        <a href="#">Beauty</a>
+        <a href="#">Mobiles</a>
+    </div>
+
+    <!-- BANNER -->
+    <div class="fk-banner">
+        <h2>🎉 Big Billion Days Sale — Up to 80% Off!</h2>
+        <p>Shop the biggest sale of the year on Electronics, Fashion, Appliances & more</p>
+        <button class="fk-shop-btn">Shop Now</button>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="fk-products">
+        <h3>Top Deals for You</h3>
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://via.placeholder.com/200x200?text=Smartphone" alt="Smartphone">
+                    <span class="badge-discount">50% OFF</span>
+                </div>
+                <div class="product-info">
+                    <p class="product-name">OnePlus 12R Smartphone</p>
+                    <p class="product-price">₹29,999 <s class="original-price">₹59,999</s></p>
+                    <div class="product-rating">⭐ 4.5 (2.3k reviews)</div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://via.placeholder.com/200x200?text=Laptop" alt="Laptop">
+                    <span class="badge-discount">35% OFF</span>
+                </div>
+                <div class="product-info">
+                    <p class="product-name">Dell Inspiron 15 Laptop</p>
+                    <p class="product-price">₹45,999 <s class="original-price">₹70,000</s></p>
+                    <div class="product-rating">⭐ 4.3 (1.1k reviews)</div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://via.placeholder.com/200x200?text=Watch" alt="Watch">
+                    <span class="badge-discount">60% OFF</span>
+                </div>
+                <div class="product-info">
+                    <p class="product-name">Fastrack Casual Watch</p>
+                    <p class="product-price">₹1,299 <s class="original-price">₹3,295</s></p>
+                    <div class="product-rating">⭐ 4.1 (5k reviews)</div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://via.placeholder.com/200x200?text=Shoes" alt="Shoes">
+                    <span class="badge-discount">40% OFF</span>
+                </div>
+                <div class="product-info">
+                    <p class="product-name">Nike Air Max Running Shoes</p>
+                    <p class="product-price">₹4,799 <s class="original-price">₹7,999</s></p>
+                    <div class="product-rating">⭐ 4.6 (8.2k reviews)</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="fk-footer">
+        <p>© 2025 Flipkart Clone — Built with HTML & CSS Flexbox</p>
+    </footer>
+
+</body>
+</html>

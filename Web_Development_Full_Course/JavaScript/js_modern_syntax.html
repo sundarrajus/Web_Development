@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 - Modern JS Syntax (ES6+)</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         08 - MODERN JS SYNTAX (ES6+)
+         What you will learn:
+         - let vs const vs var
+         - Destructuring (arrays & objects)
+         - Spread operator (...)
+         - Rest parameters (...)
+         - Default parameters
+         - Short-circuit evaluation (&& / ||)
+         - Optional chaining (?.)
+         - Nullish coalescing (??)
+         - Shorthand object properties
+         - Computed property names
+    ========================================== -->
+
+    <h1>Modern JS Syntax (ES6+)</h1>
+
+    <!-- 1. LET vs CONST vs VAR -->
+    <h2>let vs const vs var</h2>
+    <div class="note">
+        <strong>Rule of thumb:</strong> Always use <code>const</code> by default.
+        Switch to <code>let</code> only when you know the variable will be reassigned.
+        Avoid <code>var</code> — it has function scope and hoisting quirks.
+    </div>
+    <pre>
+const PI = 3.14159;       // cannot be reassigned
+let count = 0;            // can be reassigned
+count = 1;                // OK
+
+const arr = [1, 2, 3];
+arr.push(4);              // OK — const protects the binding, not the contents
+// arr = [5, 6];          // ERROR — cannot reassign the variable itself
+    </pre>
+
+    <!-- 2. DESTRUCTURING ARRAYS -->
+    <h2>Array Destructuring</h2>
+    <pre>
+const colors = ["red", "green", "blue"];
+
+// Old way
+let r = colors[0];
+let g = colors[1];
+
+// Destructuring
+const [red, green, blue] = colors;
+console.log(red);    // "red"
+console.log(green);  // "green"
+
+// Skip elements with a comma
+const [first, , third] = colors;
+console.log(first, third);   // "red" "blue"
+
+// Swap two variables
+let a = 1, b = 2;
+[a, b] = [b, a];
+console.log(a, b);   // 2 1
+    </pre>
+
+    <!-- 3. DESTRUCTURING OBJECTS -->
+    <h2>Object Destructuring</h2>
+    <pre>
+const user = { name: "Sundar", age: 21, city: "Chennai" };
+
+// Old way
+let name1 = user.name;
+
+// Destructuring
+const { name, age, city } = user;
+console.log(name, age);   // "Sundar" 21
+
+// Rename while destructuring
+const { name: studentName } = user;
+console.log(studentName);   // "Sundar"
+
+// Default values
+const { course = "JavaScript" } = user;
+console.log(course);   // "JavaScript"  (not in user, so default applies)
+
+// In function parameters
+function greet({ name, age }) {
+    console.log(`Hello ${name}, you are ${age}`);
+}
+greet(user);   // Hello Sundar, you are 21
+    </pre>
+
+    <!-- 4. SPREAD OPERATOR -->
+    <h2>Spread Operator (...)</h2>
+    <pre>
+// Spread in arrays — expand elements
+const a = [1, 2, 3];
+const b = [4, 5, 6];
+const combined = [...a, ...b];
+console.log(combined);   // [1, 2, 3, 4, 5, 6]
+
+// Copy an array (not by reference)
+const copy = [...a];
+copy.push(99);
+console.log(a);     // [1, 2, 3]   (original unchanged)
+console.log(copy);  // [1, 2, 3, 99]
+
+// Spread in objects — merge
+const defaults = { theme: "light", lang: "en" };
+const userPrefs = { lang: "ta", font: "large" };
+const merged = { ...defaults, ...userPrefs };
+console.log(merged);
+// { theme: "light", lang: "ta", font: "large" }
+// Note: userPrefs.lang overrides defaults.lang
+
+// Spread to pass array as function arguments
+const nums = [10, 20, 30];
+console.log(Math.max(...nums));   // 30
+    </pre>
+
+    <!-- 5. REST PARAMETERS -->
+    <h2>Rest Parameters (...)</h2>
+    <div class="note">
+        <strong>Same syntax, different purpose:</strong> Spread <em>expands</em> an iterable.
+        Rest <em>collects</em> remaining arguments into an array.
+    </div>
+    <pre>
+// Rest collects all extra arguments
+function sum(...numbers) {
+    return numbers.reduce((total, n) => total + n, 0);
+}
+console.log(sum(1, 2, 3));         // 6
+console.log(sum(10, 20, 30, 40));  // 100
+
+// Rest after named params
+function intro(name, age, ...hobbies) {
+    console.log(`${name} (${age}) likes: ${hobbies.join(", ")}`);
+}
+intro("Sundar", 21, "coding", "chess", "music");
+// Sundar (21) likes: coding, chess, music
+    </pre>
+
+    <!-- 6. DEFAULT PARAMETERS -->
+    <h2>Default Parameters</h2>
+    <pre>
+function greet(name = "Guest", greeting = "Hello") {
+    console.log(`${greeting}, ${name}!`);
+}
+greet();                    // Hello, Guest!
+greet("Sundar");            // Hello, Sundar!
+greet("Sundar", "Hi");      // Hi, Sundar!
+    </pre>
+
+    <!-- 7. SHORT-CIRCUIT & OPTIONAL CHAINING -->
+    <h2>Short-circuit, Optional Chaining &amp; Nullish Coalescing</h2>
+    <pre>
+// && — returns first falsy value, or last value if all truthy
+console.log(0 && "hello");    // 0
+console.log(1 && "hello");    // "hello"
+
+// || — returns first truthy value
+console.log(0 || "default");  // "default"
+console.log("hi" || "nope");  // "hi"
+
+// ?. — optional chaining (safe access, no error if undefined)
+const user = { profile: { avatar: "pic.jpg" } };
+console.log(user?.profile?.avatar);   // "pic.jpg"
+console.log(user?.address?.city);     // undefined  (no error thrown)
+
+// ?? — nullish coalescing (only uses fallback for null/undefined)
+let score = 0;
+console.log(score || 10);    // 10  (wrong — 0 is falsy)
+console.log(score ?? 10);    // 0   (correct — 0 is not null/undefined)
+    </pre>
+
+    <!-- 8. SHORTHAND PROPERTIES -->
+    <h2>Shorthand Object Properties</h2>
+    <pre>
+const name = "Sundar";
+const age = 21;
+
+// Old way
+const user1 = { name: name, age: age };
+
+// Shorthand (ES6) — when key and variable name are the same
+const user2 = { name, age };
+console.log(user2);   // { name: "Sundar", age: 21 }
+
+// Shorthand methods
+const obj = {
+    greet() {
+        console.log("hello");
+    }
+};
+obj.greet();   // hello
+    </pre>
+
+    <script>
+        // Array destructuring
+        const colors = ["red", "green", "blue"];
+        const [red, green, blue] = colors;
+        console.log(red, green, blue);
+
+        // Object destructuring
+        const user = { name: "Sundar", age: 21, city: "Chennai" };
+        const { name, age } = user;
+        console.log(name, age);
+
+        // Spread
+        const a = [1, 2, 3];
+        const b = [4, 5, 6];
+        console.log([...a, ...b]);
+        console.log(Math.max(...a));
+
+        // Rest
+        function sum(...numbers) {
+            return numbers.reduce((t, n) => t + n, 0);
+        }
+        console.log(sum(1, 2, 3, 4, 5));
+
+        // Default params
+        function greet(name = "Guest") {
+            console.log(`Hello, ${name}!`);
+        }
+        greet();
+        greet("Sundar");
+
+        // Optional chaining & nullish coalescing
+        const profile = { scores: { math: 0 } };
+        console.log(profile?.scores?.math ?? "no score");   // 0
+        console.log(profile?.address?.city ?? "no city");   // "no city"
+    </script>
+
+</body>
+</html>

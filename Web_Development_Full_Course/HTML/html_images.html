@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 - HTML Images</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px; max-width: 900px; margin: 0 auto; }
+        h1 { color: #e44d26; margin-bottom: 20px; }
+        h2 { color: #333; border-left: 4px solid #e44d26; padding-left: 10px; margin: 30px 0 15px; }
+        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        p { color: #555; margin-bottom: 10px; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 13px; }
+
+        /* ---- Image styles used in examples ---- */
+
+        /* Basic image */
+        .img-basic { width: 200px; height: 150px; }
+
+        /* Rounded corners */
+        .img-rounded { width: 200px; height: 150px; border-radius: 12px; }
+
+        /* Circle image */
+        .img-circle { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #e44d26; }
+
+        /* Responsive image — takes full width of parent */
+        .img-responsive { width: 100%; height: 200px; object-fit: cover; }
+
+        /* Image with border */
+        .img-border { width: 200px; height: 150px; border: 4px solid green; }
+
+        /* Image inside a div with fixed size */
+        .img-box { width: 200px; height: 150px; border: 2px solid black; border-radius: 10px; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Image grid layout */
+        .img-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+        .img-grid img { width: 150px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         04 - HTML IMAGES
+         What you will learn:
+         - img tag (src, alt, width, height)
+         - Styling images with CSS
+         - border-radius: circle image
+         - object-fit: cover / contain
+         - Responsive images
+         - Image inside a container box
+         - Image grid using flexbox
+    ========================================== -->
+
+    <h1>HTML Images — Complete Guide</h1>
+
+    <!-- 1. BASIC IMAGE TAG -->
+    <h2>1. Basic img Tag</h2>
+    <div class="box">
+        <p>Syntax: <code>&lt;img src="path/to/image.jpg" alt="description"&gt;</code></p>
+        <p>The <code>src</code> attribute gives the path to the image. The <code>alt</code> text shows if image fails to load.</p>
+        <!-- Using a placeholder image from the web so it works even without local files -->
+        <img class="img-basic" src="https://via.placeholder.com/200x150?text=Basic+Image" alt="Basic example image">
+    </div>
+
+    <!-- 2. ROUNDED CORNERS -->
+    <h2>2. Rounded Corners — border-radius</h2>
+    <div class="box">
+        <p>Use <code>border-radius</code> in CSS to round the corners of an image.</p>
+        <img class="img-rounded" src="https://via.placeholder.com/200x150?text=Rounded" alt="Rounded corners image">
+    </div>
+
+    <!-- 3. CIRCLE IMAGE -->
+    <h2>3. Circle Image — border-radius: 50%</h2>
+    <div class="box">
+        <p>Setting <code>border-radius: 50%</code> makes any image a circle. Use equal width and height!</p>
+        <img class="img-circle" src="https://via.placeholder.com/150x150?text=Circle" alt="Circle image">
+    </div>
+
+    <!-- 4. IMAGE WITH BORDER -->
+    <h2>4. Image with Border</h2>
+    <div class="box">
+        <p>Add a <code>border</code> property in CSS to give the image an outline.</p>
+        <img class="img-border" src="https://via.placeholder.com/200x150?text=With+Border" alt="Image with border">
+    </div>
+
+    <!-- 5. RESPONSIVE IMAGE -->
+    <h2>5. Responsive Image — width: 100%</h2>
+    <div class="box">
+        <p>Set <code>width: 100%</code> so the image always fits its container — this is responsive design!</p>
+        <img class="img-responsive" src="https://via.placeholder.com/900x200?text=Responsive+Full+Width" alt="Responsive image">
+    </div>
+
+    <!-- 6. object-fit -->
+    <h2>6. object-fit: cover vs contain</h2>
+    <div class="box">
+        <p><code>object-fit: cover</code> — fills the box, may crop the image (most common for cards/thumbnails)</p>
+        <p><code>object-fit: contain</code> — fits the entire image inside the box, may leave empty space</p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div>
+                <p><strong>cover</strong></p>
+                <img style="width:200px; height:120px; object-fit:cover; border: 2px solid #e44d26;" 
+                     src="https://via.placeholder.com/400x600?text=Tall+Image" alt="cover">
+            </div>
+            <div>
+                <p><strong>contain</strong></p>
+                <img style="width:200px; height:120px; object-fit:contain; border: 2px solid green; background:#eee;" 
+                     src="https://via.placeholder.com/400x600?text=Tall+Image" alt="contain">
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. IMAGE INSIDE A FIXED-SIZE BOX -->
+    <h2>7. Image Inside a Fixed Container (like a card)</h2>
+    <div class="box">
+        <p>Wrap the image in a <code>&lt;div&gt;</code> with fixed size and <code>overflow: hidden</code>. This is very common in card layouts.</p>
+        <div class="img-box">
+            <img src="https://via.placeholder.com/400x300?text=Card+Image" alt="Card image">
+        </div>
+    </div>
+
+    <!-- 8. IMAGE GRID -->
+    <h2>8. Image Grid (using flexbox)</h2>
+    <div class="box">
+        <p>Combine images with <code>display: flex</code> to create a photo gallery grid.</p>
+        <div class="img-grid">
+            <img src="https://via.placeholder.com/150x100/FF6347/fff?text=Img+1" alt="Image 1">
+            <img src="https://via.placeholder.com/150x100/4682B4/fff?text=Img+2" alt="Image 2">
+            <img src="https://via.placeholder.com/150x100/32CD32/fff?text=Img+3" alt="Image 3">
+            <img src="https://via.placeholder.com/150x100/FFD700/000?text=Img+4" alt="Image 4">
+            <img src="https://via.placeholder.com/150x100/9370DB/fff?text=Img+5" alt="Image 5">
+        </div>
+    </div>
+
+</body>
+</html>

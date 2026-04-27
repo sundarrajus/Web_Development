@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - HTML Forms</title>
+    <link rel="stylesheet" href="form_style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         03 - HTML FORMS
+         What you will learn:
+         - form tag and its attributes
+         - input types: text, password, email, number, date, radio, checkbox, file
+         - textarea, select, option
+         - button types: submit, reset
+         - label tag
+         - fieldset and legend
+         - placeholder, required, disabled attributes
+    ========================================== -->
+
+    <div class="page-wrapper">
+        <h1>HTML Forms — Complete Guide</h1>
+
+        <!-- SECTION 1: Basic Login Form (from your form.html) -->
+        <section>
+            <h2>1. Basic Login Form</h2>
+            <div class="form-box">
+                <form action="#">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Login</button>
+                        <button type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 2: All Input Types -->
+        <section>
+            <h2>2. All Important Input Types</h2>
+            <div class="form-box">
+                <form action="#">
+                    <div class="form-group">
+                        <label>Text Input</label>
+                        <input type="text" placeholder="type='text'">
+                    </div>
+                    <div class="form-group">
+                        <label>Password Input</label>
+                        <input type="password" placeholder="type='password'">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Input</label>
+                        <input type="email" placeholder="type='email'">
+                    </div>
+                    <div class="form-group">
+                        <label>Number Input</label>
+                        <input type="number" placeholder="type='number'" min="0" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Date Input</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Color Picker</label>
+                        <input type="color" value="#e44d26">
+                    </div>
+                    <div class="form-group">
+                        <label>Range Slider</label>
+                        <input type="range" min="0" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label>File Upload</label>
+                        <input type="file">
+                    </div>
+                    <div class="form-group">
+                        <label>Search</label>
+                        <input type="search" placeholder="type='search'">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Radio and Checkbox -->
+        <section>
+            <h2>3. Radio Buttons & Checkboxes</h2>
+            <div class="form-box">
+                <form>
+                    <div class="form-group">
+                        <label><strong>Gender (Radio — choose only one):</strong></label><br>
+                        <input type="radio" name="gender" id="male"> <label for="male">Male</label> &nbsp;
+                        <input type="radio" name="gender" id="female"> <label for="female">Female</label> &nbsp;
+                        <input type="radio" name="gender" id="other"> <label for="other">Other</label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Hobbies (Checkbox — choose multiple):</strong></label><br>
+                        <input type="checkbox" id="coding"> <label for="coding">Coding</label> &nbsp;
+                        <input type="checkbox" id="reading"> <label for="reading">Reading</label> &nbsp;
+                        <input type="checkbox" id="gaming"> <label for="gaming">Gaming</label> &nbsp;
+                        <input type="checkbox" id="music"> <label for="music">Music</label>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Textarea and Select -->
+        <section>
+            <h2>4. Textarea & Select Dropdown</h2>
+            <div class="form-box">
+                <form>
+                    <div class="form-group">
+                        <label>Message (Textarea)</label>
+                        <textarea rows="4" cols="40" placeholder="Write your message here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Select your State</label>
+                        <select>
+                            <option value="">-- Choose State --</option>
+                            <option value="ap">Andhra Pradesh</option>
+                            <option value="ts">Telangana</option>
+                            <option value="ka">Karnataka</option>
+                            <option value="tn">Tamil Nadu</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Fieldset & Legend -->
+        <section>
+            <h2>5. Fieldset & Legend (Grouping fields)</h2>
+            <div class="form-box">
+                <form>
+                    <fieldset>
+                        <legend>Personal Details</legend>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" placeholder="Last Name">
+                        </div>
+                    </fieldset>
+                    <fieldset style="margin-top: 15px;">
+                        <legend>Contact Details</legend>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="number" placeholder="Phone Number">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="Email Address">
+                        </div>
+                    </fieldset>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

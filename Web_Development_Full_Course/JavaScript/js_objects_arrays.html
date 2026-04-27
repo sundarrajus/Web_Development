@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - Objects &amp; Arrays</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         03 - OBJECTS & ARRAYS
+         What you will learn:
+         - Object literals and object constructors
+         - Accessing properties (dot vs bracket notation)
+         - Dynamic property access
+         - Object methods
+         - Array creation (literal vs constructor)
+         - Array.isArray()
+         - for...in loop
+         - Array methods: map, filter, reduce
+         - Array methods: push, pop, shift, unshift, splice
+    ========================================== -->
+
+    <h1>Objects &amp; Arrays</h1>
+
+    <!-- 1. OBJECTS -->
+    <h2>Objects</h2>
+    <pre>
+// Object literal
+let user = {
+    uid: 101,
+    usn: "sundar",
+    age: 21,
+};
+console.log(user);          // { uid: 101, usn: 'sundar', age: 21 }
+console.log(user.age);      // 21  (dot notation)
+console.log(user['uid']);   // 101 (bracket notation)
+
+// Dynamic property access
+let userinfo = "usn";
+console.log(user.userinfo);     // undefined (looks for key 'userinfo')
+console.log(user["userinfo"]);  // undefined (same)
+console.log(user[userinfo]);    // 'sundar'  (uses variable value 'usn')
+    </pre>
+
+    <!-- 2. OBJECTS WITH METHODS -->
+    <h2>Objects with Methods</h2>
+    <pre>
+let s = {
+    name: "sundar",
+    age: 20,
+    course: "python",
+    add: function() { console.log("hi I am sundar"); }
+};
+
+console.log(s.age);     // 20
+console.log(s["name"]); // sundar
+console.log(s.add());   // hi I am sundar
+    </pre>
+
+    <!-- 3. ARRAYS -->
+    <h2>Arrays</h2>
+    <pre>
+// Two ways to create arrays
+let arr = [1, 2, 3];            // array literal
+let arr2 = new Array(1, 2, 3); // array constructor
+
+console.log(Array.isArray(arr));   // true
+console.log(Array.isArray({}));    // false (object, not array)
+
+// Modifying elements
+arr = ["hi", 123, "hello"];
+arr[1] = "sundar";
+console.log(arr);       // ["hi", "sundar", "hello"]
+console.log(arr.length); // 3
+    </pre>
+
+    <!-- 4. for...in LOOP -->
+    <h2>for...in Loop (iterates indices/keys)</h2>
+    <div class="note">
+        <strong>Note:</strong> <code>for...in</code> on an array gives you the <em>index</em>
+        (0, 1, 2…), not the value. Use <code>for...of</code> or a regular <code>for</code> loop
+        to get values.
+    </div>
+    <pre>
+let arr2 = [10, "web", true, null, undefined];
+for (let ele in arr2) {
+    console.log(ele);   // 0, 1, 2, 3, 4  (indices, not values)
+}
+    </pre>
+
+    <!-- 5. HIGHER-ORDER ARRAY METHODS -->
+    <h2>Higher-Order Array Methods</h2>
+    <pre>
+let arr = [1, 2, 3];
+
+// map — transforms each element, returns new array
+let doubled = arr.map(n => n * 2);
+console.log(doubled);   // [2, 4, 6]
+
+// filter — returns elements that pass the test
+let evens = arr.filter(n => n % 2 == 0);
+console.log(evens);     // [2]
+
+// reduce — reduces to a single value (here: product)
+let product = arr.reduce((a, b) => a * b, 1);
+console.log(product);   // 6
+    </pre>
+
+    <!-- 6. MUTATING ARRAY METHODS -->
+    <h2>Mutating Array Methods</h2>
+    <pre>
+let ar = [1, 2, 3, 4, 5];
+
+// push — adds to end, returns new length
+let a1 = ar.push(6, 7, 80);
+console.log(ar);    // [1,2,3,4,5,6,7,80]
+console.log(a1);    // 8  (new length)
+
+// pop — removes last element, returns it
+let a2 = ar.pop();
+console.log(ar);    // [1,2,3,4,5,6,7]
+console.log(a2);    // 80
+
+// shift — removes first element, returns it
+let a3 = ar.shift();
+console.log(ar);    // [2,3,4,5,6,7]
+console.log(a3);    // 1
+
+// unshift — adds to beginning, returns new length
+let a4 = ar.unshift(90);
+console.log(ar);    // [90,2,3,4,5,6,7]
+console.log(a4);    // 7
+
+// splice(start, deleteCount) — removes elements
+let a5 = ar.splice(2, 2);
+console.log(ar);    // [90,2,5,6,7]
+console.log(a5);    // [3,4]  (removed)
+
+// splice(start, 0, ...items) — inserts without removing
+let a6 = ar.splice(2, 0, 7, 45, 12);
+console.log(ar);    // [90,2,7,45,12,5,6,7]
+console.log(a6);    // []  (nothing removed)
+    </pre>
+
+    <script>
+        // Objects
+        let user = {
+            uid: 101,
+            usn: "sundar",
+            age: 21,
+        };
+        console.log(user);
+        console.log(user.age);
+        console.log(user['uid']);
+        let userinfo = "usn";
+        console.log(user.userinfo);
+        console.log(user["userinfo"]);
+        console.log(user[userinfo]);
+
+        // Object with method
+        let s = {
+            name: "sundar",
+            age: 20,
+            course: "python",
+            add: function() { console.log("hi I am sundar"); }
+        };
+        let e = s.age;
+        console.log(e);
+        console.log(s.add());
+
+        // Arrays
+        let arr = [1, 2, 3];
+        console.log(arr);
+        let arr2 = new Array(1, 2, 3);
+        console.log(arr2);
+        console.log(Array.isArray(arr));
+
+        arr = ["hi", 123, "hello"];
+        arr[1] = "sundar";
+        console.log(arr);
+        console.log(arr.length);
+
+        // for...in
+        arr2 = [10, "web", true, null, undefined];
+        for (let ele in arr2) {
+            console.log(ele);
+        }
+
+        // map, filter, reduce
+        arr = [1, 2, 3];
+        let a = arr.map(n => n * 2);
+        console.log(a);
+        a = arr.filter(n => n % 2 == 0);
+        console.log(a);
+        a = arr.reduce((a, b) => a * b, 1);
+        console.log(a);
+
+        // Mutating methods
+        let ar = [1, 2, 3, 4, 5];
+        console.log(ar);
+        let a1 = ar.push(6, 7, 80);
+        console.log(ar);
+        console.log(a1);
+        let a2 = ar.pop();
+        console.log(ar);
+        console.log(a2);
+        let a3 = ar.shift();
+        console.log(ar);
+        console.log(a3);
+        let a4 = ar.unshift(90);
+        console.log(ar);
+        console.log(a4);
+        let a5 = ar.splice(2, 2);
+        console.log(ar);
+        console.log(a5);
+        let a6 = ar.splice(2, 0, 7, 45, 12);
+        console.log(ar);
+        console.log(a6);
+    </script>
+
+</body>
+</html>

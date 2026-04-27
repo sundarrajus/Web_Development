@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07 - CSS Positioning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 30px; }
+        .wrapper { max-width: 950px; margin: 0 auto; }
+        h1 { color: #c0392b; margin-bottom: 20px; }
+        h2 { color: #333; border-left: 4px solid #c0392b; padding-left: 10px; margin: 30px 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        p { color: #555; margin-bottom: 10px; line-height: 1.6; }
+        code { background: #fdecea; padding: 2px 6px; border-radius: 3px; font-family: monospace; color: #c0392b; }
+
+        /* ===================================
+           POSITION: STATIC (default)
+        =================================== */
+        .static-demo div {
+            background: steelblue;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        /* ===================================
+           POSITION: RELATIVE
+        =================================== */
+        .relative-parent { background: #eee; padding: 10px; height: 100px; position: relative; border: 2px dashed #999; }
+        .relative-child {
+            background: tomato;
+            color: white;
+            padding: 8px 15px;
+            position: relative;
+            top: 20px;
+            left: 40px;
+            display: inline-block;
+        }
+
+        /* ===================================
+           POSITION: ABSOLUTE
+        =================================== */
+        .abs-parent {
+            background: #e8f4fd;
+            height: 160px;
+            position: relative;   /* <-- IMPORTANT: child positions relative to this */
+            border: 2px solid steelblue;
+            border-radius: 6px;
+        }
+        .abs-child-tl {
+            position: absolute;
+            top: 0; left: 0;
+            background: #c0392b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 0 0 10px 0;
+        }
+        .abs-child-tr {
+            position: absolute;
+            top: 0; right: 0;
+            background: #1abc9c;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 0 0 0 10px;
+        }
+        .abs-child-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #8e44ad;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .abs-child-br {
+            position: absolute;
+            bottom: 0; right: 0;
+            background: #f39c12;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px 0 0 0;
+        }
+
+        /* ===================================
+           PRACTICE: task220.html — Black bars + blueviolet bar
+        =================================== */
+        .black-bar {
+            background-color: black;
+            height: 40px;
+            margin: 10px 0;
+        }
+        .violet-bar {
+            background-color: blueviolet;
+            height: 40px;
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        /* ===================================
+           PRACTICE: task320.html — Heading + positioned boxes
+        =================================== */
+        .task320-container {
+            border: 2px solid green;
+            height: 300px;
+            position: relative;
+        }
+        .task320-heading {
+            text-align: center;
+            padding-top: 10px;
+            margin: 20px;
+            border: 1px solid green;
+        }
+        .task320-left {
+            border: 2px solid green;
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            left: 20px;
+            top: 80px;
+            background: lightgreen;
+        }
+        .task320-center {
+            border: 2px solid green;
+            height: 100px;
+            width: 100px;
+            margin: auto;
+            background: lightyellow;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ===================================
+           REAL PROJECT: PySpiders / JSpiders card
+           (from your position.html)
+        =================================== */
+        .institute-card {
+            border: 1px solid black;
+            height: 300px;
+            width: 400px;
+            margin: 0 auto;
+            background-color: brown;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .psp-badge {
+            background-color: white;
+            border-radius: 0px 0px 20px 0px;
+            font-family: cursive;
+            top: 0; left: 0;
+            width: 130px;
+            height: 60px;
+            text-align: end;
+            padding-right: 10px;
+            position: absolute;
+        }
+        .jsp-badge {
+            background-color: white;
+            border-radius: 0px 0px 0px 20px;
+            font-family: cursive;
+            top: 0; right: 0;
+            width: 130px;
+            height: 60px;
+            position: absolute;
+            text-align: center;
+            padding-left: 10px;
+        }
+        .institute-card span { color: orange; }
+        .small-text { font-size: 11px; font-family: serif; }
+        .profile-circle {
+            border: 2px solid black;
+            height: 120px;
+            width: 120px;
+            position: absolute;
+            right: 20px;
+            top: 80px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ===================================
+           POSITION: FIXED
+        =================================== */
+        /* Note: Fixed demo is shown inline, not actually fixed to not break layout */
+        .fixed-demo {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .fixed-demo code { background: rgba(255,255,255,0.2); color: white; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ==========================================
+         07 - CSS POSITIONING
+         What you will learn:
+         - position: static (default)
+         - position: relative
+         - position: absolute
+         - position: fixed
+         - top, left, right, bottom properties
+         - transform: translate() for centering
+    ========================================== -->
+
+    <h1>CSS Positioning</h1>
+
+    <!-- 1. STATIC -->
+    <h2>1. position: static — Default (Normal Flow)</h2>
+    <div class="card">
+        <p>Every element is <code>static</code> by default. Elements appear one after another — no special positioning.</p>
+        <div class="static-demo">
+            <div>Box 1 — static</div>
+            <div>Box 2 — static</div>
+            <div>Box 3 — static</div>
+        </div>
+    </div>
+
+    <!-- 2. RELATIVE -->
+    <h2>2. position: relative — Moves from its normal spot</h2>
+    <div class="card">
+        <p><code>position: relative</code> moves the element from WHERE IT WOULD NORMALLY BE using <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code>.</p>
+        <div class="relative-parent">
+            <div class="relative-child">I moved 20px down, 40px right from my normal position</div>
+        </div>
+    </div>
+
+    <!-- 3. ABSOLUTE -->
+    <h2>3. position: absolute — Positions inside the nearest relative parent</h2>
+    <div class="card">
+        <p>The child with <code>position: absolute</code> is placed relative to its nearest <strong>positioned parent</strong> (parent with <code>position: relative/absolute/fixed</code>).</p>
+        <p><strong>Key rule:</strong> Always give the parent <code>position: relative</code> first!</p>
+        <div class="abs-parent">
+            <div class="abs-child-tl">Top-Left</div>
+            <div class="abs-child-tr">Top-Right</div>
+            <div class="abs-child-center">Center (transform trick)</div>
+            <div class="abs-child-br">Bottom-Right</div>
+        </div>
+    </div>
+
+    <!-- 4. FIXED -->
+    <h2>4. position: fixed — Sticks to the screen</h2>
+    <div class="card">
+        <p><code>position: fixed</code> keeps the element in the same spot even when you scroll. Common use: sticky headers, floating buttons.</p>
+        <div class="fixed-demo">
+            Example: <code>position: fixed; top: 0; left: 0;</code> pins to top-left of the screen.<br>
+            This demo doesn't actually fix to window to keep the page readable!
+        </div>
+    </div>
+
+    <!-- 5. PRACTICE: task220.html -->
+    <h2>5. Practice Task — Three Horizontal Bars</h2>
+    <div class="card">
+        <p>Recreate: Two black bars (full width) with a violet bar (80% width, centered) in between.</p>
+        <div class="black-bar"></div>
+        <div class="violet-bar"></div>
+        <div class="black-bar"></div>
+    </div>
+
+    <!-- 6. PRACTICE: task320.html -->
+    <h2>6. Practice Task — Positioned Boxes Inside Container</h2>
+    <div class="card">
+        <p>A heading at top, one box absolutely positioned to the left, one centered using <code>position + transform</code>.</p>
+        <div class="task320-container">
+            <h3 class="task320-heading">Heading</h3>
+            <div class="task320-left"></div>
+            <div class="task320-center"></div>
+        </div>
+    </div>
+
+    <!-- 7. REAL PROJECT: Institute Card -->
+    <h2>7. Real Project — Institute Card (like your position.html)</h2>
+    <div class="card">
+        <p>Using absolute positioning to place badges in corners of a container card.</p>
+        <div class="institute-card">
+            <div class="psp-badge">
+                <strong><span>Py</span>spiders</strong>
+                <div class="small-text">MARATHAHALLI</div>
+            </div>
+            <div class="jsp-badge">
+                <strong><span>J</span>spiders</strong>
+                <div class="small-text">MARATHAHALLI</div>
+            </div>
+            <div class="profile-circle">Your Photo</div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

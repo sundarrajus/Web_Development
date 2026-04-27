@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 - CSS Flexbox</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 30px; }
+        .wrapper { max-width: 950px; margin: 0 auto; }
+        h1 { color: #16a085; margin-bottom: 20px; }
+        h2 { color: #333; border-left: 4px solid #16a085; padding-left: 10px; margin: 30px 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        p { color: #555; margin-bottom: 8px; line-height: 1.6; }
+        code { background: #e8f8f5; padding: 2px 6px; border-radius: 3px; font-family: monospace; color: #16a085; }
+
+        /* Generic flex demo box */
+        .flex-box { background: #16a085; color: white; padding: 12px 18px; border-radius: 5px; text-align: center; font-weight: bold; min-width: 60px; }
+
+        /* ===== 1. flex-direction ===== */
+        .demo-row { display: flex; flex-direction: row; gap: 10px; padding: 10px; background: #f9f9f9; border-radius: 5px; }
+        .demo-column { display: flex; flex-direction: column; gap: 10px; padding: 10px; background: #f9f9f9; border-radius: 5px; width: 150px; }
+
+        /* ===== 2. justify-content ===== */
+        .jc-start       { display: flex; justify-content: flex-start;    gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 8px; }
+        .jc-end         { display: flex; justify-content: flex-end;      gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 8px; }
+        .jc-center      { display: flex; justify-content: center;        gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 8px; }
+        .jc-between     { display: flex; justify-content: space-between; gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 8px; }
+        .jc-around      { display: flex; justify-content: space-around;  gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 8px; }
+        .jc-evenly      { display: flex; justify-content: space-evenly;  gap: 8px; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+
+        /* ===== 3. align-items ===== */
+        .ai-demo { display: flex; gap: 10px; padding: 10px; background: #f0f0f0; border-radius: 5px; height: 100px; margin-bottom: 8px; }
+        .ai-start   { align-items: flex-start; }
+        .ai-end     { align-items: flex-end; }
+        .ai-center  { align-items: center; }
+        .ai-stretch { align-items: stretch; }
+
+        /* ===== 4. flex-wrap ===== */
+        .wrap-demo  { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+        .wrap-box   { background: #16a085; color: white; padding: 10px 20px; border-radius: 5px; text-align: center; width: 120px; }
+
+        /* ===== 5. flex-grow, flex-shrink, flex-basis ===== */
+        .grow-demo { display: flex; gap: 10px; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+        .grow-1 { flex-grow: 1; background: #1abc9c; color: white; padding: 10px; border-radius: 5px; text-align: center; }
+        .grow-2 { flex-grow: 2; background: #16a085; color: white; padding: 10px; border-radius: 5px; text-align: center; }
+        .grow-3 { flex-grow: 3; background: #0e6655; color: white; padding: 10px; border-radius: 5px; text-align: center; }
+
+        /* ===== 6. gap ===== */
+        .gap-demo { display: flex; gap: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+
+        /* ===== 7. Center with Flexbox ===== */
+        .center-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            background: #e8f8f5;
+            border: 2px dashed #16a085;
+            border-radius: 8px;
+        }
+        .center-box { background: #16a085; color: white; padding: 15px 30px; border-radius: 8px; font-size: 18px; }
+
+        /* ===== 8. Real Example: Navbar (from your flex.html / Document.html) ===== */
+        .flex-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+        .nav-logo h2 { color: blue; font-family: cursive; font-size: 22px; }
+        .nav-logo span { font-style: italic; font-size: 12px; color: #555; }
+        .nav-logo span em { color: orangered; }
+        .nav-search { display: flex; align-items: center; gap: 5px; }
+        .nav-search input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; width: 220px; }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a { text-decoration: none; color: #333; font-size: 14px; padding: 6px 10px; border-radius: 4px; transition: background 0.2s; }
+        .nav-links a:hover { background: #f0f0f0; }
+        .nav-btn { padding: 8px 18px; background: #2874f0; color: white; border: none; border-radius: 4px; cursor: pointer; }
+
+        /* ===== 9. Card Layout with Flex ===== */
+        .card-layout { display: flex; flex-wrap: wrap; gap: 15px; }
+        .mini-card { flex: 1 1 150px; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .mini-card h4 { color: #16a085; margin-bottom: 5px; }
+        .mini-card p { font-size: 13px; color: #777; margin: 0; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ==========================================
+         08 - CSS FLEXBOX
+         What you will learn:
+         - display: flex
+         - flex-direction: row / column
+         - justify-content (horizontal alignment)
+         - align-items (vertical alignment)
+         - flex-wrap
+         - flex-grow, gap
+         - Real examples: navbar, card grid, centering
+    ========================================== -->
+
+    <h1>CSS Flexbox</h1>
+
+    <!-- 1. display: flex -->
+    <h2>1. display: flex — Activate Flexbox</h2>
+    <div class="card">
+        <p>Adding <code>display: flex</code> to a parent makes its children flex items — they line up horizontally by default.</p>
+        <div class="demo-row">
+            <div class="flex-box">Box 1</div>
+            <div class="flex-box">Box 2</div>
+            <div class="flex-box">Box 3</div>
+        </div>
+    </div>
+
+    <!-- 2. flex-direction -->
+    <h2>2. flex-direction — Row or Column</h2>
+    <div class="card">
+        <p><code>flex-direction: row</code> (default) → horizontal. <code>flex-direction: column</code> → vertical.</p>
+        <div style="display: flex; gap: 30px;">
+            <div>
+                <p><strong>row:</strong></p>
+                <div class="demo-row">
+                    <div class="flex-box">A</div>
+                    <div class="flex-box">B</div>
+                    <div class="flex-box">C</div>
+                </div>
+            </div>
+            <div>
+                <p><strong>column:</strong></p>
+                <div class="demo-column">
+                    <div class="flex-box">A</div>
+                    <div class="flex-box">B</div>
+                    <div class="flex-box">C</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. justify-content -->
+    <h2>3. justify-content — Horizontal Alignment</h2>
+    <div class="card">
+        <p>Controls how flex items are placed along the <strong>main axis</strong> (horizontal for row).</p>
+        <p><strong>flex-start</strong> (default):</p>
+        <div class="jc-start"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+        <p><strong>flex-end:</strong></p>
+        <div class="jc-end"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+        <p><strong>center:</strong></p>
+        <div class="jc-center"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+        <p><strong>space-between:</strong></p>
+        <div class="jc-between"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+        <p><strong>space-around:</strong></p>
+        <div class="jc-around"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+        <p><strong>space-evenly:</strong></p>
+        <div class="jc-evenly"><div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div></div>
+    </div>
+
+    <!-- 4. align-items -->
+    <h2>4. align-items — Vertical Alignment</h2>
+    <div class="card">
+        <p>Controls how flex items align on the <strong>cross axis</strong> (vertical for row).</p>
+        <p><strong>flex-start:</strong></p>
+        <div class="ai-demo ai-start"><div class="flex-box">A</div><div class="flex-box" style="height:60px;">B</div><div class="flex-box">C</div></div>
+        <p><strong>flex-end:</strong></p>
+        <div class="ai-demo ai-end"><div class="flex-box">A</div><div class="flex-box" style="height:60px;">B</div><div class="flex-box">C</div></div>
+        <p><strong>center:</strong></p>
+        <div class="ai-demo ai-center"><div class="flex-box">A</div><div class="flex-box" style="height:60px;">B</div><div class="flex-box">C</div></div>
+    </div>
+
+    <!-- 5. flex-wrap -->
+    <h2>5. flex-wrap — Wrapping Items</h2>
+    <div class="card">
+        <p><code>flex-wrap: wrap</code> lets items wrap to the next line if there's not enough space.</p>
+        <div class="wrap-demo">
+            <div class="wrap-box">Item 1</div><div class="wrap-box">Item 2</div><div class="wrap-box">Item 3</div>
+            <div class="wrap-box">Item 4</div><div class="wrap-box">Item 5</div><div class="wrap-box">Item 6</div>
+            <div class="wrap-box">Item 7</div><div class="wrap-box">Item 8</div>
+        </div>
+    </div>
+
+    <!-- 6. flex-grow -->
+    <h2>6. flex-grow — How Much an Item Grows</h2>
+    <div class="card">
+        <p><code>flex-grow</code> tells an item how much of the remaining space to take. Higher = more space.</p>
+        <div class="grow-demo">
+            <div class="grow-1">grow: 1</div>
+            <div class="grow-2">grow: 2</div>
+            <div class="grow-3">grow: 3</div>
+        </div>
+    </div>
+
+    <!-- 7. gap -->
+    <h2>7. gap — Space Between Items</h2>
+    <div class="card">
+        <p><code>gap: 20px</code> adds space between flex children — no need for margins!</p>
+        <div class="gap-demo">
+            <div class="flex-box">A</div><div class="flex-box">B</div><div class="flex-box">C</div>
+        </div>
+    </div>
+
+    <!-- 8. Center with Flexbox -->
+    <h2>8. Centering with Flexbox — justify-content + align-items</h2>
+    <div class="card">
+        <p>The easiest way to center something: <code>justify-content: center; align-items: center;</code></p>
+        <div class="center-demo">
+            <div class="center-box">I am perfectly centered!</div>
+        </div>
+    </div>
+
+    <!-- 9. Real Example: Navbar -->
+    <h2>9. Real Example — Flexbox Navbar (Flipkart Style)</h2>
+    <div class="card">
+        <p>Flexbox is perfect for navigation bars — logo on left, search in middle, links on right.</p>
+        <nav class="flex-nav">
+            <div class="nav-logo">
+                <h2>FlipKart</h2>
+                <span>Explore <em>plus</em></span>
+            </div>
+            <div class="nav-search">
+                <input type="search" placeholder="Search for products...">
+                <button class="nav-btn">🔍</button>
+            </div>
+            <div class="nav-links">
+                <a href="#">Login</a>
+                <a href="#">Cart 🛒</a>
+                <a href="#">Seller</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 10. Card Grid with flex-wrap -->
+    <h2>10. Real Example — Card Grid Layout</h2>
+    <div class="card">
+        <p>Combine <code>flex-wrap</code> with <code>flex: 1 1 150px</code> for a responsive card grid.</p>
+        <div class="card-layout">
+            <div class="mini-card"><h4>HTML</h4><p>Structure of web pages</p></div>
+            <div class="mini-card"><h4>CSS</h4><p>Styling & layout</p></div>
+            <div class="mini-card"><h4>JavaScript</h4><p>Interactivity & logic</p></div>
+            <div class="mini-card"><h4>Bootstrap</h4><p>CSS framework</p></div>
+            <div class="mini-card"><h4>React</h4><p>Frontend library</p></div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

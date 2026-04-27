@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 - CSS Box Model</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 30px; }
+        h1 { color: #264de4; margin-bottom: 10px; }
+        h2 { color: #333; border-left: 4px solid #264de4; padding-left: 10px; margin: 30px 0 15px; }
+        .wrapper { max-width: 900px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        p { color: #555; margin-bottom: 10px; line-height: 1.6; }
+        code { background: #eef; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 13px; color: #264de4; }
+
+        /* ===== BOX MODEL DIAGRAM ===== */
+        .box-diagram {
+            background: #fff9e6;
+            border: 3px solid orange;
+            padding: 30px;
+            margin: 20px auto;
+            width: 400px;
+            text-align: center;
+            position: relative;
+        }
+        .box-diagram::before {
+            content: "MARGIN (outside space)";
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: orange;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .border-box {
+            background: #ffe0b2;
+            border: 4px solid #e44d26;
+            padding: 25px;
+        }
+        .border-box::before {
+            content: "BORDER";
+            display: block;
+            font-size: 12px;
+            color: #e44d26;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .padding-box {
+            background: #e8f5e9;
+            border: 2px dashed green;
+            padding: 20px;
+        }
+        .padding-box::before {
+            content: "PADDING (inside space)";
+            display: block;
+            font-size: 12px;
+            color: green;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .content-box {
+            background: #264de4;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        /* ===== CSS BOX MODEL EXAMPLES ===== */
+
+        /* Basic box from your new.html — improved with comments */
+        .example-box {
+            background-color: black;
+            color: white;
+            width: 220px;
+            text-align: center;
+            padding: 30px;           /* Space inside the border */
+            border: 10px dotted yellow; /* Border around the element */
+            margin: 20px auto;       /* Space outside the border */
+            border-radius: 0px 50px; /* Alternating rounded corners */
+            box-shadow: 0px 0px 20px black; /* Drop shadow */
+        }
+
+        .margin-demo { background: #fce4ec; border: 2px solid red; padding: 10px; width: 200px; margin: 30px auto; text-align: center; }
+        .padding-demo { background: #e3f2fd; border: 2px solid blue; padding: 40px; width: 200px; margin: 0 auto; text-align: center; }
+        .border-demo { border-top: 5px solid red; border-right: 5px dotted blue; border-bottom: 5px dashed green; border-left: 5px double orange; padding: 15px; margin: 10px 0; }
+
+        /* Hover effect from new.html */
+        .hover-box {
+            background: green;
+            color: white;
+            padding: 10px 20px;
+            width: fit-content;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .hover-box:hover {
+            width: 300px;
+            background-color: darkgreen;
+            transform: scale(1.05);
+        }
+
+        /* Pseudo-elements from new.html */
+        .styled-heading {
+            font-size: 60px;
+            font-family: cursive;
+        }
+        .styled-heading::first-letter { color: coral; }
+
+        .india-style { font-size: 60px; font-family: cursive; }
+        .india-style span { font-size: 80px; color: orange; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ==========================================
+         05 - CSS BOX MODEL
+         What you will learn:
+         - The Box Model: content, padding, border, margin
+         - How margin, padding, border work
+         - box-sizing: border-box
+         - border-radius (rounded corners)
+         - box-shadow
+         - :hover pseudo-class
+         - ::first-letter pseudo-element
+    ========================================== -->
+
+    <h1>CSS Box Model</h1>
+
+    <!-- 1. BOX MODEL DIAGRAM -->
+    <h2>1. The CSS Box Model — Visual Diagram</h2>
+    <div class="card">
+        <p>Every HTML element is a rectangular box. It has 4 layers:</p>
+        <p><strong>Content</strong> → <strong>Padding</strong> → <strong>Border</strong> → <strong>Margin</strong></p>
+        <div class="box-diagram">
+            <div class="border-box">
+                <div class="padding-box">
+                    <div class="content-box">CONTENT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MARGIN -->
+    <h2>2. Margin — Space OUTSIDE the border</h2>
+    <div class="card">
+        <p><code>margin: 30px auto;</code> — 30px top/bottom, auto centers horizontally</p>
+        <p>Shorthand: <code>margin: top right bottom left</code></p>
+        <div class="margin-demo">margin: 30px auto</div>
+    </div>
+
+    <!-- 3. PADDING -->
+    <h2>3. Padding — Space INSIDE the border</h2>
+    <div class="card">
+        <p>Padding pushes content away from the border. The background color fills the padding area.</p>
+        <div class="padding-demo">padding: 40px</div>
+    </div>
+
+    <!-- 4. BORDER -->
+    <h2>4. Border — The outline around the element</h2>
+    <div class="card">
+        <p>Border can have different <code>width</code>, <code>style</code>, and <code>color</code> for each side.</p>
+        <div class="border-demo">Different border on each side!</div>
+    </div>
+
+    <!-- 5. FULL EXAMPLE from your new.html -->
+    <h2>5. Full Example — Styled Box</h2>
+    <div class="card">
+        <p>Combining all: padding, border, margin, border-radius, box-shadow.</p>
+        <h1 class="example-box">CSS_Box_Model</h1>
+    </div>
+
+    <!-- 6. box-sizing -->
+    <h2>6. box-sizing: border-box</h2>
+    <div class="card">
+        <p>By default, padding and border <strong>add</strong> to the element's width. With <code>box-sizing: border-box</code>, the total size stays as you set — padding and border are included inside.</p>
+        <p>That's why we write <code>* { box-sizing: border-box; }</code> at the top of every CSS file!</p>
+    </div>
+
+    <!-- 7. HOVER pseudo-class -->
+    <h2>7. :hover Pseudo-class</h2>
+    <div class="card">
+        <p>The <code>:hover</code> rule applies styles when the mouse is over the element. Try hovering below:</p>
+        <div class="hover-box">Hover over me!</div>
+    </div>
+
+    <!-- 8. PSEUDO-ELEMENTS -->
+    <h2>8. ::first-letter Pseudo-element</h2>
+    <div class="card">
+        <p><code>::first-letter</code> styles just the very first letter of text.</p>
+        <h2 class="styled-heading">JSpy...</h2>
+        <h2 class="india-style">I<span>n</span>D<span>i</span>A</h2>
+    </div>
+
+</div>
+</body>
+</html>

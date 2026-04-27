@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 - Events &amp; Forms</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        /* Demo styles */
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        input[type="text"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 5px; width: 220px; }
+        #status { font-style: italic; color: #555; margin-top: 8px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         05 - EVENTS & FORMS
+         What you will learn:
+         - addEventListener (click, dblclick, keydown, keyup)
+         - Arrow function syntax in event listeners
+         - Form submit event & preventDefault()
+         - focus, blur, input, change events
+         - Form validation with JS
+    ========================================== -->
+
+    <h1>Events &amp; Forms</h1>
+
+    <!-- LIVE DEMO AREA -->
+    <div id="demo-area">
+
+        <!-- Button events -->
+        <h3>Button Events</h3>
+        <button id="btn1">Double-click me!</button>
+        <p id="btn1-status">Waiting for double-click...</p>
+
+        <!-- Keyboard events -->
+        <h3>Keyboard Events</h3>
+        <input type="text" id="keyInput" placeholder="Type something here">
+        <p id="key-status">Key status: idle</p>
+
+        <!-- Form validation -->
+        <h3>Form Validation</h3>
+        <form id="myForm">
+            <input type="text" id="nameField" placeholder="Enter your name"> <br><br>
+            <span id="formMsg"></span>
+            <button type="submit">Submit</button>
+        </form>
+
+    </div>
+
+    <!-- CODE EXPLANATIONS -->
+    <h2>How It Works</h2>
+
+    <!-- 1. addEventListener -->
+    <h2>addEventListener</h2>
+    <div class="note">
+        <strong>Note:</strong> <code>addEventListener</code> is preferred over inline
+        <code>onclick</code> attributes — it keeps HTML and JS separate and allows
+        multiple listeners on the same element.
+    </div>
+    <pre>
+let btn = document.getElementById("btn1");
+
+// 'dblclick' fires when the button is double-clicked
+btn.addEventListener("dblclick", () => {
+    console.log("Button double-clicked");
+    btn.style.backgroundColor = "red";
+});
+    </pre>
+
+    <!-- 2. KEYBOARD EVENTS -->
+    <h2>Keyboard Events: keydown &amp; keyup</h2>
+    <pre>
+let input = document.getElementById("keyInput");
+
+// keydown — fires as soon as a key is pressed
+input.addEventListener("keydown", () => {
+    console.log("Key pressed down");
+});
+
+// keyup — fires when the key is released
+input.addEventListener("keyup", () => {
+    console.log("Key released");
+});
+    </pre>
+
+    <!-- 3. FORM EVENTS -->
+    <h2>Form Events</h2>
+    <pre>
+const form  = document.getElementById("myForm");
+const name  = document.getElementById("nameField");
+const msg   = document.getElementById("formMsg");
+
+// submit — fires when the form is submitted
+// e.preventDefault() stops the page from reloading
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (name.value === "") {
+        msg.innerText = "Name is required";
+        msg.style.color = "red";
+    } else {
+        msg.innerText = "Form submitted successfully!";
+        msg.style.color = "green";
+    }
+});
+
+// focus — fires when the input gains focus (user clicks into it)
+name.addEventListener("focus", () => {
+    name.style.border = "2px solid red";
+});
+
+// blur — fires when the input loses focus (user clicks away)
+name.addEventListener("blur", () => {
+    if (name.value === "") {
+        msg.innerText = "Name cannot be empty";
+    }
+});
+
+// input — fires on every keystroke while typing
+name.addEventListener("input", () => {
+    msg.innerText = "Typing...";
+});
+
+// change — fires when the value is committed (after blur with a changed value)
+name.addEventListener("change", () => {
+    console.log("Value changed to:", name.value);
+});
+    </pre>
+
+    <script>
+        // Button double-click
+        let btn = document.getElementById("btn1");
+        let btn1Status = document.getElementById("btn1-status");
+        btn.addEventListener("dblclick", () => {
+            console.log("Button double-clicked");
+            btn.style.backgroundColor = "red";
+            btn1Status.innerText = "Double-clicked! Button turned red.";
+        });
+
+        // Keyboard events
+        let keyInput = document.getElementById("keyInput");
+        let keyStatus = document.getElementById("key-status");
+        keyInput.addEventListener("keydown", () => {
+            console.log("down");
+            keyStatus.innerText = "Key status: ↓ pressed";
+        });
+        keyInput.addEventListener("keyup", () => {
+            console.log("up");
+            keyStatus.innerText = "Key status: ↑ released";
+        });
+
+        // Form validation
+        const form     = document.getElementById("myForm");
+        const nameField = document.getElementById("nameField");
+        const formMsg  = document.getElementById("formMsg");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (nameField.value === "") {
+                formMsg.innerText = "Name is required";
+                formMsg.className = "error";
+            } else {
+                formMsg.innerText = "Form submitted successfully!";
+                formMsg.className = "success";
+            }
+        });
+
+        nameField.addEventListener("focus", () => {
+            nameField.style.border = "2px solid red";
+        });
+
+        nameField.addEventListener("blur", () => {
+            if (nameField.value === "") {
+                formMsg.innerText = "Name cannot be empty";
+            }
+        });
+
+        nameField.addEventListener("input", () => {
+            formMsg.innerText = "Typing...";
+            formMsg.className = "";
+        });
+
+        nameField.addEventListener("change", () => {
+            console.log("Value changed to:", nameField.value);
+        });
+    </script>
+
+</body>
+</html>

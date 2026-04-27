@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09 - Callbacks &amp; Higher-Order Functions</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        #log { font-family: monospace; font-size: 13px; background: #f4f4f4; padding: 10px; border-radius: 4px; margin-top: 10px; min-height: 40px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         09 - CALLBACKS & HIGHER-ORDER FUNCTIONS
+         What you will learn:
+         - What a callback is
+         - Passing functions as arguments
+         - Built-in HOFs: forEach, map, filter, find, every, some, sort
+         - setTimeout and setInterval (async callbacks)
+         - Callback hell — why it's a problem
+    ========================================== -->
+
+    <h1>Callbacks &amp; Higher-Order Functions</h1>
+
+    <!-- LIVE DEMO -->
+    <div id="demo-area">
+        <h3>setTimeout Demo</h3>
+        <button onclick="startTimer()">Start 2-second timer</button>
+        <button onclick="startInterval()">Start interval (every 1s)</button>
+        <button onclick="stopInterval()">Stop interval</button>
+        <div id="log">Click a button to see async callbacks in action...</div>
+    </div>
+
+    <!-- 1. WHAT IS A CALLBACK? -->
+    <h2>What is a Callback?</h2>
+    <div class="note">
+        <strong>Definition:</strong> A callback is a function passed as an argument to another function,
+        to be called later — either immediately or after something finishes (like a timer or network request).
+    </div>
+    <pre>
+// A function that accepts another function as argument
+function doMath(a, b, operation) {
+    return operation(a, b);
+}
+
+function add(x, y)      { return x + y; }
+function multiply(x, y) { return x * y; }
+
+console.log(doMath(3, 4, add));       // 7
+console.log(doMath(3, 4, multiply));  // 12
+
+// Using an arrow function inline as callback
+console.log(doMath(10, 5, (x, y) => x - y));   // 5
+    </pre>
+
+    <!-- 2. forEach -->
+    <h2>forEach — iterate without return</h2>
+    <pre>
+const students = ["Sundar", "Raju", "Priya"];
+
+// forEach runs a callback for each element (returns undefined)
+students.forEach((student, index) => {
+    console.log(`${index + 1}. ${student}`);
+});
+// 1. Sundar
+// 2. Raju
+// 3. Priya
+    </pre>
+
+    <!-- 3. map -->
+    <h2>map — transform each element</h2>
+    <pre>
+const marks = [45, 78, 92, 61];
+const grades = marks.map(m => {
+    if (m >= 90) return "A";
+    if (m >= 75) return "B";
+    if (m >= 60) return "C";
+    return "D";
+});
+console.log(grades);   // ["D", "B", "A", "C"]
+    </pre>
+
+    <!-- 4. filter -->
+    <h2>filter — keep matching elements</h2>
+    <pre>
+const scores = [32, 78, 55, 90, 41, 88];
+const passed = scores.filter(s => s >= 60);
+console.log(passed);   // [78, 90, 88]
+    </pre>
+
+    <!-- 5. find, every, some -->
+    <h2>find / every / some</h2>
+    <pre>
+const nums = [3, 7, 2, 9, 4];
+
+// find — returns FIRST element that matches (or undefined)
+console.log(nums.find(n => n > 5));    // 7
+
+// every — returns true only if ALL elements match
+console.log(nums.every(n => n > 0));   // true
+console.log(nums.every(n => n > 5));   // false
+
+// some — returns true if AT LEAST ONE element matches
+console.log(nums.some(n => n > 8));    // true
+console.log(nums.some(n => n > 10));   // false
+    </pre>
+
+    <!-- 6. sort -->
+    <h2>sort — with a comparator callback</h2>
+    <div class="note">
+        <strong>Note:</strong> Without a callback, <code>sort()</code> sorts lexicographically
+        (string order), so <code>[10, 9, 2]</code> becomes <code>[10, 2, 9]</code>.
+        Always pass a comparator for numbers.
+    </div>
+    <pre>
+const prices = [200, 45, 1500, 30, 890];
+
+// Ascending (a - b gives positive when a > b → move a right)
+prices.sort((a, b) => a - b);
+console.log(prices);   // [30, 45, 200, 890, 1500]
+
+// Descending
+prices.sort((a, b) => b - a);
+console.log(prices);   // [1500, 890, 200, 45, 30]
+
+// Sort objects by a property
+const students = [
+    { name: "Raju", marks: 72 },
+    { name: "Priya", marks: 91 },
+    { name: "Sundar", marks: 85 },
+];
+students.sort((a, b) => b.marks - a.marks);
+console.log(students[0].name);   // "Priya"  (highest marks first)
+    </pre>
+
+    <!-- 7. setTimeout & setInterval -->
+    <h2>setTimeout &amp; setInterval</h2>
+    <pre>
+// setTimeout — run callback ONCE after a delay (milliseconds)
+setTimeout(() => {
+    console.log("Runs after 2 seconds");
+}, 2000);
+
+// setInterval — run callback REPEATEDLY at an interval
+const id = setInterval(() => {
+    console.log("Runs every 1 second");
+}, 1000);
+
+// clearInterval — stop the interval
+clearInterval(id);
+    </pre>
+
+    <!-- 8. CALLBACK HELL -->
+    <h2>Callback Hell — why it becomes a problem</h2>
+    <div class="note">
+        <strong>Problem:</strong> When you need multiple async operations in sequence, callbacks
+        nest deeply — making code hard to read and maintain. This is called "callback hell" or
+        the "pyramid of doom." Promises and async/await (next topic) solve this.
+    </div>
+    <pre>
+// Simulating sequential async tasks with callbacks (messy!)
+setTimeout(() => {
+    console.log("Step 1: Login");
+    setTimeout(() => {
+        console.log("Step 2: Load profile");
+        setTimeout(() => {
+            console.log("Step 3: Load posts");
+            setTimeout(() => {
+                console.log("Step 4: Done");
+            }, 1000);
+        }, 1000);
+    }, 1000);
+}, 1000);
+
+// This is callback hell — hard to read, hard to handle errors.
+// Solution → Promises & async/await (see next file).
+    </pre>
+
+    <script>
+        let intervalId = null;
+        let logEl = document.getElementById("log");
+        let count = 0;
+
+        function log(msg) {
+            logEl.textContent += msg + "\n";
+        }
+
+        function startTimer() {
+            logEl.textContent = "";
+            count = 0;
+            log("Timer started... waiting 2 seconds");
+            setTimeout(() => {
+                log("Timer fired! (2 seconds elapsed)");
+            }, 2000);
+        }
+
+        function startInterval() {
+            logEl.textContent = "";
+            count = 0;
+            if (intervalId) clearInterval(intervalId);
+            log("Interval started (every 1 second):");
+            intervalId = setInterval(() => {
+                count++;
+                log(`  tick ${count}`);
+                if (count >= 10) {
+                    clearInterval(intervalId);
+                    log("Auto-stopped at 10 ticks.");
+                }
+            }, 1000);
+        }
+
+        function stopInterval() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                log("Interval manually stopped.");
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02 - Functions &amp; Scope</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         02 - FUNCTIONS & SCOPE
+         What you will learn:
+         - Function declaration
+         - Function expression
+         - Arrow functions
+         - Return values
+         - arguments object
+         - Hoisting
+         - Primitive vs Reference types (pass by value vs reference)
+         - Variable scope (let vs var)
+    ========================================== -->
+
+    <h1>Functions &amp; Scope</h1>
+
+    <!-- 1. FUNCTION DECLARATION -->
+    <h2>Function Declaration</h2>
+    <div class="note">
+        <strong>Hoisting:</strong> Function declarations are hoisted — you can call them
+        <em>before</em> they appear in the code.
+    </div>
+    <pre>
+// Can call before definition due to hoisting
+fun();
+function fun() {
+    console.log('hello');
+}
+
+// Calling a function and using its return value
+let n = f();
+console.log(n * 20);    // 200
+
+function f() {
+    let n1 = 2;
+    let n2 = 8;
+    let r = n1 + n2;
+    return r;           // returns 10
+}
+    </pre>
+
+    <!-- 2. FUNCTION EXPRESSION -->
+    <h2>Function Expression</h2>
+    <pre>
+// Named function expression stored in a variable
+let a = function add(a, b) {
+    console.log(a * b);
+};
+a(4, 8);    // 32
+    </pre>
+
+    <!-- 3. ARROW FUNCTION -->
+    <h2>Arrow Function</h2>
+    <pre>
+let c = (a, b) => {
+    console.log(a * b);
+};
+c(4, 6);    // 24
+    </pre>
+
+    <!-- 4. ARGUMENTS OBJECT -->
+    <h2>arguments Object</h2>
+    <div class="note">
+        <strong>Note:</strong> The <code>arguments</code> object is available inside regular
+        functions (not arrow functions) and holds all passed values, regardless of how many
+        parameters are defined.
+    </div>
+    <pre>
+function s() {
+    for (let i = 0; i < arguments.length; i++) {
+        console.log("hello");
+    }
+}
+s(3);   // prints "hello" once
+s();    // prints nothing (no arguments)
+    </pre>
+
+    <!-- 5. PRIMITIVE VS REFERENCE (PASS BY VALUE VS REFERENCE) -->
+    <h2>Primitive vs Reference Types</h2>
+    <pre>
+// Primitive — copied by VALUE
+let a = 10;
+let b = a;
+a = 20;
+console.log(a, b);    // 20  10  (b is not affected)
+
+// Object — copied by REFERENCE
+let a = { no: 2 };
+let b = a;
+a.no = 90;
+console.log(a.no, b.no);    // 90  90  (both point to same object)
+
+// Array — also reference type
+function main() {
+    let l = [1, 2, 3, 4, 5];
+    f(l);
+    for (let i = 0; i < l.length; i++) {
+        console.log(l[i]);    // 1 2 3 45 5  (l[3] changed inside f)
+    }
+}
+function f(a) {
+    a[3] = 45;    // modifies the original array
+}
+main();
+    </pre>
+
+    <script>
+        // Function declaration & hoisting
+        function fun() {
+            console.log('hello');
+        }
+        fun();
+
+        let n = f();
+        console.log(n * 20);
+
+        function f() {
+            let n1 = 2;
+            let n2 = 8;
+            let r = n1 + n2;
+            return r;
+        }
+
+        // arguments object
+        function s() {
+            for (let i = 0; i < arguments.length; i++) {
+                console.log("hello");
+            }
+        }
+        s(3);
+        s();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13 - Classes &amp; OOP</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        #log { font-family: monospace; font-size: 13px; background: #f4f4f4; padding: 10px; border-radius: 4px; margin-top: 10px; min-height: 60px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         13 - CLASSES & OOP
+         What you will learn:
+         - Class syntax & constructor
+         - Instance properties & methods
+         - this keyword
+         - Getters and setters
+         - Static methods and properties
+         - Inheritance with extends
+         - super keyword
+         - Method overriding
+         - instanceof check
+    ========================================== -->
+
+    <h1>Classes &amp; OOP</h1>
+
+    <!-- LIVE DEMO -->
+    <div id="demo-area">
+        <h3>Bank Account Demo</h3>
+        <button onclick="runDemo()">Run Bank Account demo</button>
+        <div id="log">Click the button to see classes in action...</div>
+    </div>
+
+    <!-- 1. CLASS BASICS -->
+    <h2>Class Syntax &amp; Constructor</h2>
+    <div class="note">
+        <strong>Class</strong> is a blueprint. <strong>Instance</strong> is the real object
+        created from the blueprint using <code>new</code>.
+    </div>
+    <pre>
+class Student {
+    // constructor runs automatically when 'new Student()' is called
+    constructor(name, age) {
+        this.name = name;   // 'this' refers to the new instance being created
+        this.age  = age;
+        this.marks = [];
+    }
+
+    // instance method — available on every Student object
+    greet() {
+        console.log(`Hi, I am ${this.name}, ${this.age} years old.`);
+    }
+
+    addMark(mark) {
+        this.marks.push(mark);
+    }
+
+    average() {
+        if (this.marks.length === 0) return 0;
+        return this.marks.reduce((a, b) => a + b, 0) / this.marks.length;
+    }
+}
+
+const s1 = new Student("Sundar", 21);
+s1.greet();             // Hi, I am Sundar, 21 years old.
+s1.addMark(85);
+s1.addMark(92);
+console.log(s1.average());   // 88.5
+    </pre>
+
+    <!-- 2. GETTERS & SETTERS -->
+    <h2>Getters &amp; Setters</h2>
+    <pre>
+class Circle {
+    constructor(radius) {
+        this._radius = radius;   // underscore = convention for "private-ish"
+    }
+
+    get radius() { return this._radius; }
+
+    set radius(value) {
+        if (value <= 0) throw new RangeError("Radius must be positive");
+        this._radius = value;
+    }
+
+    get area() {
+        return (Math.PI * this._radius ** 2).toFixed(2);
+    }
+}
+
+const c = new Circle(5);
+console.log(c.area);     // "78.54"   (called like a property, not a method)
+c.radius = 10;
+console.log(c.area);     // "314.16"
+// c.radius = -1;        // RangeError: Radius must be positive
+    </pre>
+
+    <!-- 3. STATIC METHODS -->
+    <h2>Static Methods &amp; Properties</h2>
+    <pre>
+class MathUtils {
+    static PI = 3.14159;   // static property — belongs to the CLASS, not instances
+
+    static square(n)   { return n * n; }
+    static cube(n)     { return n * n * n; }
+    static isPrime(n) {
+        if (n < 2) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+}
+
+// Called on the class directly — NOT on an instance
+console.log(MathUtils.PI);          // 3.14159
+console.log(MathUtils.square(4));   // 16
+console.log(MathUtils.isPrime(17)); // true
+    </pre>
+
+    <!-- 4. INHERITANCE -->
+    <h2>Inheritance with extends &amp; super</h2>
+    <pre>
+class Animal {
+    constructor(name, sound) {
+        this.name  = name;
+        this.sound = sound;
+    }
+
+    speak() {
+        console.log(`${this.name} says ${this.sound}!`);
+    }
+
+    toString() {
+        return `Animal(${this.name})`;
+    }
+}
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name, "Woof");   // super() calls Animal's constructor
+        this.breed = breed;
+    }
+
+    // Method overriding — replaces Animal's speak()
+    speak() {
+        super.speak();         // optionally call parent method
+        console.log(`${this.name} wags its tail.`);
+    }
+
+    fetch(item) {
+        console.log(`${this.name} fetches the ${item}!`);
+    }
+}
+
+const dog = new Dog("Bruno", "Labrador");
+dog.speak();         // Bruno says Woof!  /  Bruno wags its tail.
+dog.fetch("ball");   // Bruno fetches the ball!
+
+console.log(dog instanceof Dog);    // true
+console.log(dog instanceof Animal); // true — Dog IS-A Animal
+    </pre>
+
+    <script>
+        function runDemo() {
+            const log = document.getElementById("log");
+            const lines = [];
+            const out = (msg) => lines.push(msg);
+
+            class BankAccount {
+                #balance = 0;   // private field (ES2022)
+
+                constructor(owner, initialDeposit = 0) {
+                    this.owner = owner;
+                    this.#balance = initialDeposit;
+                    this.transactions = [];
+                }
+
+                deposit(amount) {
+                    if (amount <= 0) throw new RangeError("Deposit must be positive");
+                    this.#balance += amount;
+                    this.transactions.push({ type: "deposit", amount });
+                    out(`Deposited ₹${amount}. Balance: ₹${this.#balance}`);
+                }
+
+                withdraw(amount) {
+                    if (amount > this.#balance) throw new Error("Insufficient funds");
+                    this.#balance -= amount;
+                    this.transactions.push({ type: "withdraw", amount });
+                    out(`Withdrew ₹${amount}. Balance: ₹${this.#balance}`);
+                }
+
+                get balance() { return this.#balance; }
+
+                statement() {
+                    out(`--- Statement for ${this.owner} ---`);
+                    this.transactions.forEach(t =>
+                        out(`  ${t.type}: ₹${t.amount}`)
+                    );
+                    out(`  Current balance: ₹${this.#balance}`);
+                }
+            }
+
+            class SavingsAccount extends BankAccount {
+                constructor(owner, initial, interestRate) {
+                    super(owner, initial);
+                    this.interestRate = interestRate;
+                }
+
+                addInterest() {
+                    const interest = Math.round(this.balance * this.interestRate);
+                    this.deposit(interest);
+                    out(`  (Interest applied at ${this.interestRate * 100}%)`);
+                }
+            }
+
+            try {
+                const acc = new SavingsAccount("Sundar", 1000, 0.05);
+                out("Account created for Sundar with ₹1000");
+                acc.deposit(500);
+                acc.withdraw(200);
+                acc.addInterest();
+                acc.statement();
+                out("");
+                out("instanceof BankAccount: " + (acc instanceof BankAccount));
+                out("instanceof SavingsAccount: " + (acc instanceof SavingsAccount));
+            } catch (e) {
+                out("Error: " + e.message);
+            }
+
+            log.textContent = lines.join("\n");
+        }
+    </script>
+
+</body>
+</html>

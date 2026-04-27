@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 - JavaScript Basics</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         01 - JAVASCRIPT BASICS
+         What you will learn:
+         - Variables: let, var, const
+         - Data types: number, string, boolean, null, undefined
+         - typeof operator
+         - Template literals
+         - Type conversion (Number, String)
+         - Arithmetic & increment/decrement operators
+         - Ternary operator
+         - Conditional: if statement
+         - For loop basics
+         - Math.trunc()
+    ========================================== -->
+
+    <h1>JavaScript Basics</h1>
+
+    <!-- 1. VARIABLES & DATA TYPES -->
+    <h2>Variables &amp; Data Types</h2>
+    <p>
+        JavaScript has dynamic typing — the same variable can hold different types at different times.
+        Use <code>let</code> for block-scoped variables and <code>typeof</code> to check the type.
+    </p>
+    <pre>
+let n;
+console.log(n, typeof(n));      // undefined 'undefined'
+
+n = 10;
+console.log(n, typeof(n));      // 10 'number'
+
+n = 'sundar';
+console.log(n, typeof(n));      // sundar 'string'
+console.log(`hello ${n}`);      // hello sundar  (template literal)
+
+n = true;
+console.log(n, typeof(n));      // true 'boolean'
+
+n = null;
+console.log(n, typeof(n));      // null 'object'  (JS quirk)
+
+n = 2.3456;
+console.log(n, typeof(n));      // 2.3456 'number'
+n = Math.trunc(2.3456);
+console.log(n, typeof(n));      // 2 'number'
+    </pre>
+
+    <!-- 2. TYPE CONVERSION -->
+    <h2>Type Conversion</h2>
+    <pre>
+let h = String(10);
+console.log(h, typeof(h));      // "10" 'string'
+
+console.log('na' * 2);          // NaN  (Not a Number)
+    </pre>
+
+    <!-- 3. OPERATORS -->
+    <h2>Arithmetic &amp; Increment/Decrement Operators</h2>
+    <div class="note">
+        <strong>Note:</strong>
+        <code>n++</code> returns the value <em>before</em> incrementing (post-increment).
+        <code>++n</code> increments <em>first</em>, then returns the new value (pre-increment).
+    </div>
+    <pre>
+let n = 20;
+console.log(n++);   // 20  (uses n, then n becomes 21)
+console.log(n);     // 21
+console.log(n++);   // 21  (uses n, then n becomes 22)
+console.log(n);     // 22
+console.log(++n);   // 23  (n becomes 23, then uses it)
+console.log(n);     // 23
+
+let a = 3, b = 7;
+console.log("addition of a and b is : " + a + b);   // "37"  (concatenation)
+console.log("addition of a and b is : ", a + b);    // 10   (addition)
+    </pre>
+
+    <!-- 4. TERNARY OPERATOR -->
+    <h2>Ternary Operator</h2>
+    <pre>
+let n = 20;
+let res = (n >= 18) ? "major" : "minor";
+console.log(res);   // major
+    </pre>
+
+    <!-- 5. CONDITIONALS -->
+    <h2>Conditional: if Statement</h2>
+    <pre>
+let e = 8;
+if (e % 2 == 0) {
+    console.log('yes');   // yes
+}
+    </pre>
+
+    <!-- 6. FOR LOOP EXAMPLES -->
+    <h2>For Loop Examples</h2>
+    <pre>
+// Print numbers 0 to 10 as comma-separated string
+let str = "";
+for (let i = 0; i <= 10; i++) {
+    if (i <= 9) {
+        str += i + ',';
+    } else {
+        str = str + i;
+    }
+}
+console.log(str);   // 0,1,2,3,4,5,6,7,8,9,10
+
+// Sum of 1 to 10
+let sum = 0;
+for (let i = 1; i <= 10; i++) {
+    sum += i;
+}
+console.log(sum);   // 55
+
+// Factorial of 5
+let fact = 1;
+for (let i = 5; i >= 1; i--) {
+    fact = fact * i;
+}
+console.log(fact);  // 120
+
+// Print even numbers 0 to 10
+for (let i = 0; i <= 10; i++) {
+    if (i % 2 == 0) {
+        console.log(i);
+    }
+}
+
+// Sum of odd numbers from 0 to 30
+let n1 = 0, n2 = 30, s = 0;
+for (let i = n1; i <= n2; i++) {
+    if (i % 2 != 0) {
+        s += i;
+    }
+}
+console.log(s);   // 225
+    </pre>
+
+    <div class="note">
+        <strong>Tip:</strong> Open the browser's DevTools console (<code>F12</code>) to see all
+        <code>console.log()</code> outputs. JS code placed in <code>&lt;script&gt;</code> tags
+        runs automatically when the page loads.
+    </div>
+
+    <script>
+        function main() {
+            // Variables & data types
+            let n;
+            console.log(n, typeof(n));
+            n = 10;
+            console.log(n, typeof(n));
+            n = 'sundar';
+            console.log(n, typeof(n));
+            console.log(`hello ${n}`);
+            n = true;
+            console.log(n, typeof(n));
+            n = 2.3456;
+            console.log(n, typeof(n));
+            n = Math.trunc(2.3456);
+            console.log(n, typeof(n));
+            n = null;
+            console.log(n, typeof(n));
+
+            // Ternary operator
+            n = 20;
+            let res = (n >= 18) ? "major" : "minor";
+            console.log(res);
+
+            // Increment/decrement
+            console.log(n++);
+            console.log(n);
+            console.log(n++);
+            console.log(n);
+            console.log(++n);
+            console.log(n);
+
+            // String concatenation vs addition
+            let a = 3;
+            let b = 7;
+            console.log("addition of a and b is : " + a + b);  // concatenation
+            console.log("addition of a and b is : ", a + b);   // addition
+
+            // Type conversion
+            let h = String(10);
+            console.log(h, typeof(h));
+            console.log('na' * 2);
+
+            // Conditional
+            let e = 8;
+            if (e % 2 == 0) {
+                console.log('yes');
+            }
+
+            // For loop — comma-separated string
+            let str = "";
+            for (let i = 0; i <= 10; i++) {
+                if (i <= 9) {
+                    str += i + ',';
+                } else {
+                    str = str + i;
+                }
+            }
+            console.log(str);
+
+            // Sum 1 to 10
+            let sum = 0;
+            for (let i = 1; i <= 10; i++) {
+                sum += i;
+            }
+            console.log(sum);
+
+            // Factorial of 5
+            let fact = 1;
+            for (let i = 5; i >= 1; i--) {
+                fact = fact * i;
+            }
+            console.log(fact);
+
+            // Even numbers 0–10
+            for (let i = 0; i <= 10; i++) {
+                if (i % 2 == 0) {
+                    console.log(i);
+                }
+            }
+
+            // Sum of odd numbers 0–30
+            let n1 = 0;
+            let n2 = 30;
+            let s = 0;
+            for (let i = n1; i <= n2; i++) {
+                if (i % 2 != 0) {
+                    s += i;
+                }
+            }
+            console.log(s);
+        }
+        main();
+    </script>
+
+</body>
+</html>

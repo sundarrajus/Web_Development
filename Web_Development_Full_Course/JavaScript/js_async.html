@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 - Promises &amp; Async/Await</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f9f9f9; }
+        h1 { color: #f7df1e; text-shadow: 1px 1px 0 #333; }
+        h2 { color: #333; border-bottom: 2px solid #f7df1e; padding-bottom: 5px; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+        #demo-area { border: 2px dashed #ccc; padding: 20px; margin: 15px 0; border-radius: 6px; background: #fff; }
+        button { padding: 8px 16px; cursor: pointer; background: #f7df1e; border: none; border-radius: 4px; font-weight: bold; margin: 5px; }
+        button:hover { background: #e6cc00; }
+        #log { font-family: monospace; font-size: 13px; background: #f4f4f4; padding: 10px; border-radius: 4px; margin-top: 10px; min-height: 40px; white-space: pre-wrap; }
+        .success { color: green; }
+        .error   { color: red; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         10 - PROMISES & ASYNC/AWAIT
+         What you will learn:
+         - What a Promise is (pending, fulfilled, rejected)
+         - Creating a Promise
+         - .then() and .catch() chaining
+         - Promise.all() and Promise.race()
+         - async function
+         - await keyword
+         - try/catch with async/await
+         - Real-world pattern comparison
+    ========================================== -->
+
+    <h1>Promises &amp; Async/Await</h1>
+
+    <!-- LIVE DEMO -->
+    <div id="demo-area">
+        <h3>Promise Demo</h3>
+        <button onclick="runSuccess()">Run successful promise chain</button>
+        <button onclick="runFail()">Run failing promise</button>
+        <button onclick="runAll()">Run Promise.all()</button>
+        <div id="log">Click a button to see promises in action...</div>
+    </div>
+
+    <!-- 1. WHAT IS A PROMISE? -->
+    <h2>What is a Promise?</h2>
+    <div class="note">
+        <strong>Think of it like ordering food:</strong> You place an order (create the promise),
+        get a token (pending), and later either get your food (fulfilled) or hear "sorry, out of stock" (rejected).
+        Meanwhile you don't just stand there — you go sit down (non-blocking).
+    </div>
+    <pre>
+// A promise has 3 states: pending → fulfilled or rejected
+const p = new Promise((resolve, reject) => {
+    let success = true;
+    if (success) {
+        resolve("Data loaded!");      // fulfilled
+    } else {
+        reject("Something failed.");  // rejected
+    }
+});
+    </pre>
+
+    <!-- 2. .then() & .catch() -->
+    <h2>.then() &amp; .catch() chaining</h2>
+    <pre>
+function loadUser() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve({ name: "Sundar", age: 21 }), 1000);
+    });
+}
+
+function loadPosts(user) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve([`${user.name}'s post 1`, `${user.name}'s post 2`]), 800);
+    });
+}
+
+// Chaining — each .then() receives the resolved value of the previous
+loadUser()
+    .then(user => {
+        console.log("User:", user.name);
+        return loadPosts(user);          // return next promise
+    })
+    .then(posts => {
+        console.log("Posts:", posts);
+    })
+    .catch(err => {
+        console.error("Error:", err);    // handles any rejection in the chain
+    })
+    .finally(() => {
+        console.log("Done (always runs)");
+    });
+    </pre>
+
+    <!-- 3. PROMISE.ALL & PROMISE.RACE -->
+    <h2>Promise.all() &amp; Promise.race()</h2>
+    <pre>
+const p1 = new Promise(res => setTimeout(() => res("Result 1"), 1000));
+const p2 = new Promise(res => setTimeout(() => res("Result 2"), 500));
+const p3 = new Promise(res => setTimeout(() => res("Result 3"), 800));
+
+// Promise.all — waits for ALL to finish; fails if ANY one rejects
+Promise.all([p1, p2, p3]).then(results => {
+    console.log(results);   // ["Result 1", "Result 2", "Result 3"]
+});
+
+// Promise.race — resolves/rejects with the FIRST to settle
+Promise.race([p1, p2, p3]).then(winner => {
+    console.log(winner);    // "Result 2"  (fastest, 500ms)
+});
+    </pre>
+
+    <!-- 4. ASYNC/AWAIT -->
+    <h2>async / await</h2>
+    <div class="note">
+        <strong>async/await</strong> is syntactic sugar over Promises — it makes async code
+        look and read like synchronous code. Under the hood it still uses Promises.
+    </div>
+    <pre>
+// async keyword makes a function return a Promise
+async function fetchData() {
+    // await pauses execution until the Promise resolves
+    const user  = await loadUser();
+    const posts = await loadPosts(user);
+    console.log(user.name, posts);
+}
+fetchData();
+    </pre>
+
+    <!-- 5. try/catch with async/await -->
+    <h2>try/catch with async/await</h2>
+    <pre>
+function riskyOperation() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => reject("Network timeout!"), 1000);
+    });
+}
+
+async function run() {
+    try {
+        const result = await riskyOperation();
+        console.log("Success:", result);
+    } catch (err) {
+        console.error("Caught error:", err);   // "Network timeout!"
+    } finally {
+        console.log("Cleanup done.");
+    }
+}
+run();
+    </pre>
+
+    <!-- 6. SIDE-BY-SIDE COMPARISON -->
+    <h2>Callback vs Promise vs async/await — same task</h2>
+    <pre>
+// ---------- CALLBACK (messy) ----------
+getUser(1, (user) => {
+    getPosts(user.id, (posts) => {
+        getComments(posts[0].id, (comments) => {
+            console.log(comments);
+        });
+    });
+});
+
+// ---------- PROMISE CHAIN (cleaner) ----------
+getUser(1)
+    .then(user => getPosts(user.id))
+    .then(posts => getComments(posts[0].id))
+    .then(comments => console.log(comments))
+    .catch(err => console.error(err));
+
+// ---------- ASYNC/AWAIT (cleanest) ----------
+async function showComments() {
+    try {
+        const user     = await getUser(1);
+        const posts    = await getPosts(user.id);
+        const comments = await getComments(posts[0].id);
+        console.log(comments);
+    } catch (err) {
+        console.error(err);
+    }
+}
+showComments();
+    </pre>
+
+    <script>
+        const logEl = document.getElementById("log");
+        function log(msg, cls = "") {
+            const line = document.createElement("div");
+            if (cls) line.className = cls;
+            line.textContent = msg;
+            logEl.appendChild(line);
+        }
+
+        function delay(ms, value, fail = false) {
+            return new Promise((resolve, reject) =>
+                setTimeout(() => fail ? reject(value) : resolve(value), ms)
+            );
+        }
+
+        function runSuccess() {
+            logEl.innerHTML = "";
+            log("Starting promise chain...");
+            delay(800, { name: "Sundar", age: 21 })
+                .then(user => {
+                    log("User loaded: " + user.name, "success");
+                    return delay(600, ["Post 1", "Post 2"]);
+                })
+                .then(posts => {
+                    log("Posts loaded: " + posts.join(", "), "success");
+                    return delay(400, "All done!");
+                })
+                .then(msg => log(msg, "success"))
+                .catch(err => log("Error: " + err, "error"))
+                .finally(() => log("finally() always runs."));
+        }
+
+        function runFail() {
+            logEl.innerHTML = "";
+            log("Starting failing promise...");
+            delay(600, "Server unreachable", true)
+                .then(data => log("This won't run: " + data))
+                .catch(err => log("Caught in .catch(): " + err, "error"))
+                .finally(() => log("Cleanup in .finally()."));
+        }
+
+        async function runAll() {
+            logEl.innerHTML = "";
+            log("Running Promise.all() — waits for all 3...");
+            const p1 = delay(1000, "Task A done");
+            const p2 = delay(500,  "Task B done");
+            const p3 = delay(800,  "Task C done");
+            try {
+                const results = await Promise.all([p1, p2, p3]);
+                results.forEach(r => log(r, "success"));
+                log("All finished!");
+            } catch (e) {
+                log("One failed: " + e, "error");
+            }
+        }
+    </script>
+
+</body>
+</html>
