@@ -1,155 +1,160 @@
-# Web Development Study Index
+# 📚 Web Development Full Course - Index
 
-A topic-wise roadmap for the Web Development Full Course — with phase breakdown, key concepts, and practice milestones.
-
----
-
-## How to Use This Index
-
-- Follow phases **in order** — each phase builds on the previous
-- Complete the **Practice Milestones** at the end of each phase before moving on
-- Use the file references to jump directly to the relevant lesson
-- Revisit earlier files whenever you need a refresher
+> **Repository:** [sundarrajus/Web_Development](https://github.com/sundarrajus/Web_Development)
+> **Path:** `Web_Development_Full_Course/`
+> **Sections:** HTML · CSS · Bootstrap · JavaScript · Projects
 
 ---
 
-## Phase 1 — HTML Foundations
+## 📂 Course Structure
 
-**Goal:** Understand how web pages are structured. Build static pages with proper semantic markup.
-
-| Lesson | File | Key Concepts |
-|--------|------|--------------|
-| 01 | 01_html_basics.html | DOCTYPE, html/head/body, meta tags, headings (h1–h6), paragraphs, comments |
-| 02 | 02_html_lists_links_images.html | ul, ol, li, nested lists, anchor tags (href, target), img (src, alt, width) |
-| 03 | 03_html_tables.html | table, tr, th, td, colspan, rowspan, caption |
-| 04 | 04_html_forms.html | form, input types (text, email, password, radio, checkbox, file), select, textarea, button, required |
-| 05 | 05_html_semantic_elements.html | header, nav, main, section, article, aside, footer, figure, figcaption |
-
-### Phase 1 — Practice Milestones
-- [ ] Build a bio page with your name, photo, and a bulleted list of hobbies
-- [ ] Create a table showing a school timetable or product comparison
-- [ ] Build a contact form with name, email, message, and a submit button
-- [ ] Recreate a simple webpage using only semantic elements (no div soup)
+```
+Web_Development_Full_Course/
+├── HTML/
+├── CSS/
+├── Bootstrap/
+├── JavaScript/
+└── Projects/
+```
 
 ---
 
-## Phase 2 — CSS Fundamentals
+## 🔖 Section Index
 
-**Goal:** Style pages professionally. Master layout systems (Flexbox & Grid) and make designs responsive.
+### 🟠 Section 1 — HTML
+> *The skeleton of every webpage. Learn to structure content using semantic tags.*
 
-| Lesson | File | Key Concepts |
-|--------|------|--------------|
-| 06 | 06_css_selectors_and_box_model.html | element/class/ID selectors, pseudo-classes (:hover, :nth-child), box model (margin, border, padding, content), box-sizing |
-| 07 | 07_css_colors_typography.html | hex/rgb/hsl colors, background-color, background-image, Google Fonts, font-family, font-size, font-weight, line-height, text-align |
-| 08 | 08_css_display_position.html | display (block, inline, inline-block, none), position (static, relative, absolute, fixed, sticky), z-index, float, clear |
-| 09 | 09_css_flexbox.html | display:flex, flex-direction, justify-content, align-items, flex-wrap, gap, flex-grow, flex-shrink, order |
-| 10 | 10_css_grid.html | display:grid, grid-template-columns/rows, grid-gap, grid-area, auto-fit, minmax(), named areas |
-| 11 | 11_css_transitions_animations.html | transition (property, duration, timing, delay), @keyframes, animation (name, duration, iteration, direction), transform (translate, rotate, scale) |
-| 12 | 12_css_responsive_media_queries.html | @media, breakpoints (mobile/tablet/desktop), mobile-first vs desktop-first, viewport meta tag, relative units (%, em, rem, vw, vh) |
-
-### Phase 2 — Practice Milestones
-- [ ] Style your Phase 1 bio page — add colors, fonts, spacing
-- [ ] Build a navigation bar using Flexbox
-- [ ] Create a 3-column card layout using CSS Grid
-- [ ] Add a hover animation to a button
-- [ ] Make any page fully responsive (works on phone + desktop)
-
----
-
-## Phase 3 — JavaScript Core
-
-**Goal:** Add interactivity and logic to web pages. Understand how JavaScript powers dynamic behavior.
-
-| Lesson | File | Key Concepts |
-|--------|------|--------------|
-| 13 | 13_js_basics_variables_datatypes.html | var/let/const, string, number, boolean, null, undefined, typeof, template literals |
-| 14 | 14_js_operators_conditionals.html | arithmetic, comparison, logical operators, if/else, ternary operator, switch |
-| 15 | 15_js_loops_and_patterns.html | for, while, do-while, break, continue, nested loops, console.log patterns |
-| 16 | 16_js_functions.html | function declaration, function expression, arrow functions, parameters, return, default params, rest params |
-| 17 | 17_js_arrays.html | array creation, indexing, push/pop/shift/unshift, slice, splice, map, filter, reduce, forEach, find, includes, sort |
-| 18 | 18_js_objects.html | object literals, dot/bracket notation, methods, this keyword, object destructuring, spread operator, Object.keys/values/entries |
-| 19 | 19_js_dom_manipulation.html | document.querySelector, getElementById, innerHTML, textContent, setAttribute, createElement, appendChild, removeChild, classList (add/remove/toggle) |
-| 20 | 20_js_events.html | addEventListener, click, mouseover, keydown, input, change, submit, event object (e.target, e.preventDefault) |
-| 21 | 21_js_form_validation.html | accessing form values, validation logic, showing error messages, preventing invalid submission |
-| 22 | 22_js_es6_features.html | let/const, arrow functions, template literals, destructuring, spread/rest, optional chaining (?.), nullish coalescing (??), modules (import/export concept) |
-| 23 | 23_js_local_storage.html | localStorage.setItem/getItem/removeItem/clear, JSON.stringify, JSON.parse, persisting data across sessions |
-| 24 | 24_js_fetch_api_json.html | fetch(), .then(), .catch(), async/await, response.json(), rendering fetched data to the DOM |
-
-### Phase 3 — Practice Milestones
-- [ ] Write a function that takes a name and returns a greeting string
-- [ ] Filter an array of numbers to return only even ones
-- [ ] Build a counter (increment, decrement, reset) using DOM + Events
-- [ ] Validate a form (check empty fields, valid email format) using JS
-- [ ] Save a list of items to localStorage and reload them on page refresh
+| # | Topic | Key Concepts |
+|---|-------|-------------|
+| 1.1 | Introduction to HTML | What is HTML, History, Browser rendering |
+| 1.2 | HTML Document Structure | `<!DOCTYPE>`, `<html>`, `<head>`, `<body>` |
+| 1.3 | Headings & Paragraphs | `<h1>`–`<h6>`, `<p>`, `<br>`, `<hr>` |
+| 1.4 | Text Formatting Tags | `<b>`, `<i>`, `<u>`, `<strong>`, `<em>`, `<mark>` |
+| 1.5 | Links & Navigation | `<a href>`, absolute vs relative paths, `target` |
+| 1.6 | Images | `<img>`, `src`, `alt`, width, height |
+| 1.7 | Lists | `<ul>`, `<ol>`, `<li>`, `<dl>` |
+| 1.8 | Tables | `<table>`, `<tr>`, `<th>`, `<td>`, `colspan`, `rowspan` |
+| 1.9 | Forms & Inputs | `<form>`, `<input>`, `<textarea>`, `<select>`, `<button>` |
+| 1.10 | Semantic HTML5 | `<header>`, `<footer>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>` |
+| 1.11 | Media Elements | `<audio>`, `<video>`, `<iframe>`, `<embed>` |
+| 1.12 | HTML Entities & Symbols | `&amp;`, `&lt;`, `&gt;`, `&nbsp;`, `&copy;` |
+| 1.13 | Meta Tags & SEO Basics | `<meta>`, `charset`, `viewport`, `description` |
+| 1.14 | HTML Comments | `<!-- -->` |
 
 ---
 
-## Phase 4 — Projects
+### 🔵 Section 2 — CSS
+> *Style and design your pages — from colors and fonts to full page layouts.*
 
-**Goal:** Apply everything from Phases 1–3 to build real, complete projects.
-
-| Lesson | File | What You'll Build |
-|--------|------|-------------------|
-| 25 | 25_project_personal_portfolio.html | Responsive portfolio — hero, about, skills, projects, contact |
-| 26 | 26_project_todo_app.html | To-do list with add, complete, delete, and localStorage save |
-| 27 | 27_project_calculator.html | Calculator with all operators and keyboard support |
-| 28 | 28_project_quiz_app.html | Multiple choice quiz with timer, scoring, and result screen |
-| 29 | 29_project_weather_ui.html | Weather card UI rendering JSON data via Fetch API |
-| 30 | 30_project_responsive_landing_page.html | Mobile-first landing page for a product or service |
-
-### Phase 4 — Practice Milestones
-- [ ] Deploy your portfolio online (GitHub Pages — free and simple)
-- [ ] Add a dark mode toggle to one of your projects
-- [ ] Extend the To-Do app with due dates and priority tags
-- [ ] Modify the quiz app to load questions from an external JSON file
-- [ ] Build one completely original project using HTML + CSS + JS
-
----
-
-## Quick Reference — Key Concepts at a Glance
-
-### HTML Must-Knows
-- Always include `<!DOCTYPE html>` and viewport meta tag
-- Use semantic tags — avoid using `<div>` for everything
-- `alt` attribute on all images (accessibility + SEO)
-- Form inputs need `name` and `id` attributes
-
-### CSS Must-Knows
-- `box-sizing: border-box` on everything (use `* { box-sizing: border-box; }`)
-- Prefer Flexbox for 1D layouts, Grid for 2D layouts
-- Use `rem` for font sizes, `%` or `vw/vh` for containers
-- Mobile-first: write base styles for mobile, use `@media (min-width: ...)` to scale up
-
-### JavaScript Must-Knows
-- Always use `const` by default; use `let` only when the value changes; avoid `var`
-- Use `===` (strict equality), never `==`
-- `addEventListener` over inline `onclick` attributes
-- `JSON.stringify()` before saving to localStorage; `JSON.parse()` when reading back
-- `e.preventDefault()` to stop default form submission behavior
+| # | Topic | Key Concepts |
+|---|-------|-------------|
+| 2.1 | Introduction to CSS | What is CSS, How it works, 3 ways to apply CSS |
+| 2.2 | Selectors | Element, Class, ID, Universal, Attribute, Pseudo-class, Pseudo-element |
+| 2.3 | Colors & Backgrounds | Named colors, HEX, RGB, HSL, `background-color`, `background-image` |
+| 2.4 | Text & Font Styling | `font-family`, `font-size`, `font-weight`, `color`, `text-align`, `line-height` |
+| 2.5 | Box Model | `margin`, `padding`, `border`, `width`, `height`, `box-sizing` |
+| 2.6 | Display & Visibility | `block`, `inline`, `inline-block`, `none`, `visibility` |
+| 2.7 | Positioning | `static`, `relative`, `absolute`, `fixed`, `sticky`, `z-index` |
+| 2.8 | Flexbox | `flex-container`, `flex-direction`, `justify-content`, `align-items`, `flex-wrap` |
+| 2.9 | CSS Grid | `grid-template-columns`, `grid-template-rows`, `gap`, `grid-area` |
+| 2.10 | Responsive Design | `@media` queries, breakpoints, fluid layouts |
+| 2.11 | CSS Variables | `--custom-property`, `var()` |
+| 2.12 | Transitions & Animations | `transition`, `@keyframes`, `animation`, `transform` |
+| 2.13 | Pseudo-classes & Elements | `:hover`, `:focus`, `:nth-child`, `::before`, `::after` |
+| 2.14 | CSS Specificity & Cascade | Specificity rules, `!important`, inheritance |
+| 2.15 | Shadows & Gradients | `box-shadow`, `text-shadow`, `linear-gradient`, `radial-gradient` |
 
 ---
 
-## Recommended Tools
+### 🟣 Section 3 — Bootstrap
+> *Build responsive, mobile-first websites rapidly using Bootstrap 5.*
 
-| Tool | Purpose |
-|------|---------|
-| VS Code | Code editor |
-| Live Server (VS Code extension) | Auto-reload browser on save |
-| Chrome DevTools | Inspect, debug, test responsive layouts |
-| Google Fonts | Free web fonts |
-| Can I Use (caniuse.com) | Check browser support for CSS/JS features |
-| GitHub Pages | Free hosting for static HTML/CSS/JS sites |
+| # | Topic | Key Concepts |
+|---|-------|-------------|
+| 3.1 | Introduction to Bootstrap | What is Bootstrap, CDN setup, why use it |
+| 3.2 | Bootstrap Grid System | 12-column grid, containers, rows, columns |
+| 3.3 | Breakpoints & Responsiveness | `sm`, `md`, `lg`, `xl`, `xxl` breakpoints |
+| 3.4 | Typography Classes | Display headings, lead, text utilities |
+| 3.5 | Buttons | Button variants, sizes, outline buttons, button groups |
+| 3.6 | Colors & Utilities | Text colors, background colors, spacing utilities |
+| 3.7 | Navbar | Responsive navbar, toggler, brand, links, dropdown |
+| 3.8 | Cards | Card body, header, footer, image top, card groups |
+| 3.9 | Forms | Form controls, labels, `form-group`, validation classes |
+| 3.10 | Alerts & Badges | Alert types, dismissible alerts, badges |
+| 3.11 | Modals | Modal dialog, trigger, dismiss, sizing |
+| 3.12 | Carousel | Slide carousel, indicators, controls, captions |
+| 3.13 | Tables | Striped, hover, bordered, responsive tables |
+| 3.14 | Icons (Bootstrap Icons) | Icon library, usage via `<i>` tags |
+| 3.15 | Flexbox & Utility Classes | `d-flex`, `justify-content-*`, `align-items-*`, spacing |
 
 ---
 
-## Study Tips
+### 🟡 Section 4 — JavaScript
+> *Add interactivity, logic and dynamic behavior to your webpages.*
 
-- **Code every example yourself** — don't copy-paste. Typing builds muscle memory.
-- **Break things on purpose** — modify code to see what changes and what breaks.
-- **Use DevTools constantly** — Elements panel for HTML/CSS, Console for JavaScript.
-- **Build something every week** — even a tiny project reinforces learning.
-- **Read error messages** — they tell you exactly what went wrong and where.
+| # | Topic | Key Concepts |
+|---|-------|-------------|
+| 4.1 | Introduction to JavaScript | What is JS, `<script>` tag, console |
+| 4.2 | Variables & Data Types | `var`, `let`, `const`, string, number, boolean, null, undefined |
+| 4.3 | Operators | Arithmetic, comparison, logical, assignment, ternary |
+| 4.4 | Conditional Statements | `if`, `else if`, `else`, `switch` |
+| 4.5 | Loops | `for`, `while`, `do...while`, `for...of`, `for...in` |
+| 4.6 | Functions | Function declaration, expression, arrow functions, parameters, return |
+| 4.7 | Arrays | Creating arrays, methods: `push`, `pop`, `map`, `filter`, `reduce`, `forEach` |
+| 4.8 | Objects | Object literals, properties, methods, `this` keyword |
+| 4.9 | DOM Manipulation | `getElementById`, `querySelector`, `innerHTML`, `textContent`, `style` |
+| 4.10 | Events | `addEventListener`, click, input, submit, keydown, mouseover |
+| 4.11 | String Methods | `length`, `toUpperCase`, `slice`, `split`, `includes`, `trim`, template literals |
+| 4.12 | Math Object | `Math.random()`, `Math.floor()`, `Math.round()`, `Math.max()` |
+| 4.13 | Date Object | `new Date()`, `getFullYear()`, `getMonth()`, `getDay()` |
+| 4.14 | ES6+ Features | Destructuring, spread, rest, optional chaining, nullish coalescing |
+| 4.15 | JSON | `JSON.parse()`, `JSON.stringify()`, working with APIs |
+| 4.16 | Fetch API & Async/Await | `fetch()`, Promises, `.then()`, `async/await`, error handling |
+| 4.17 | Local Storage | `localStorage.setItem()`, `getItem()`, `removeItem()` |
+| 4.18 | Error Handling | `try...catch...finally`, `throw`, custom errors |
 
 ---
 
-*For the complete file listing and course overview, see* 👉 [README.md](./README.md)
+### 🟢 Section 5 — Projects
+> *Apply all concepts through real-world, hands-on projects.*
+
+| # | Project | Technologies Used |
+|---|---------|------------------|
+| 5.1 | Personal Portfolio Website | HTML, CSS |
+| 5.2 | Responsive Landing Page | HTML, CSS, Flexbox/Grid |
+| 5.3 | Bootstrap Business Page | HTML, Bootstrap 5 |
+| 5.4 | Calculator App | HTML, CSS, JavaScript |
+| 5.5 | To-Do List App | HTML, CSS, JavaScript, Local Storage |
+| 5.6 | Weather App (API) | HTML, CSS, JavaScript, Fetch API |
+| 5.7 | Quiz App | HTML, CSS, JavaScript |
+| 5.8 | E-Commerce Landing Page | HTML, CSS, Bootstrap |
+| 5.9 | Digital Clock | HTML, CSS, JavaScript, Date Object |
+| 5.10 | Form Validation Project | HTML, CSS, JavaScript |
+
+---
+
+## 🗺️ Learning Roadmap
+
+```
+[HTML] ──► [CSS] ──► [Bootstrap] ──► [JavaScript] ──► [Projects]
+  │           │            │                │
+Structure   Style      Responsive       Dynamic
+& Content  & Layout    Framework       Behaviour
+```
+
+---
+
+## 🔗 Quick Links
+
+| Resource | Link |
+|----------|------|
+| Repository Root | https://github.com/sundarrajus/Web_Development |
+| HTML Section | `Web_Development_Full_Course/HTML/` |
+| CSS Section | `Web_Development_Full_Course/CSS/` |
+| Bootstrap Section | `Web_Development_Full_Course/Bootstrap/` |
+| JavaScript Section | `Web_Development_Full_Course/JavaScript/` |
+| Projects Section | `Web_Development_Full_Course/Projects/` |
+
+---
+
+*Last updated: April 2026 · Maintained by [@sundarrajus](https://github.com/sundarrajus)*
